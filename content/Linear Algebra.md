@@ -1,3 +1,1 @@
-# Linear Algebra
-
 - Vector Operations

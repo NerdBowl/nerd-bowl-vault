@@ -1,5 +1,3 @@
-# Geometric Series
-
 - A geometric sequence is an ordered list of non-zero numbers where you get from one term to the next by multiplying by a common ratio $r$.
     - $a, ar, ar^2, ar^3, \dots$
 - A finite geometric series is the sum of the first $n$ terms of a geometric sequence.

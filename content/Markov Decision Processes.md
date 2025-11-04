@@ -19,7 +19,7 @@ The goal for any agent is to maximize the return. The return $G_t$ is defined as
 
 - Episodic (Finite-Horizon) MDPs are guaranteed to end after a fixed, known, and finite number of timesteps $T$.
     - $G_t = \Sigma^{T-t}_{k=0} \gamma^k r_{t+k}$.
-- Continuing (Infinite-Horizon) MDPs do not ****have a fixed, predetermined number of time steps. To keep the return finite, a discount factor is generally used.
+- Continuing (Infinite-Horizon) MDPs do not have a fixed, predetermined number of time steps. To keep the return finite, a discount factor is generally used.
     - $G_t = \Sigma^{\infty}_{k=0} \gamma^k r_{t+k}$
 
 In order to maximize the return the agent must determine a plan. 
@@ -32,14 +32,12 @@ In order to maximize the return the agent must determine a plan.
 The Bellman equations are the foundational equations for Markov Decision Processes. They recursively define the value of a state (or state-action pair) by linking it to the immediate rewards and the discounted values of all possible successor states.
 
 **Bellman Expectation Equations** define the value of a fixed policy $\pi$.
-
 - State-Value Function: Describes the expected return following policy $\pi$ stating from state $s$.
     - $V^\pi(s) = \Sigma_{a\in A(s)}\pi(a|s)Q^\pi(s,a)$
 - Action-Value function: Describes the expected return following policy $\pi$ after taking action $a$ in state $s$.
     - $Q^\pi(s,a) = \Sigma_{s' \in S} P(s' | s,a) [R(s'|s,a) + \gamma V^\pi(s') ]$
 
 **Bellman Optimality Equations** define the value of the optimal policy $\pi^*$.
-
 - Optimal State-Value function: Describes the maximal return starting from state $s$.
     - $V^*(s) = \max_{\pi} V^\pi(s) = \max_{a \in A(s)}Q^*(s,a)$
 - Optimal Action-Value function: Describes the maximal return after taking action $a$ in state $s$.
@@ -48,33 +46,26 @@ The Bellman equations are the foundational equations for Markov Decision Process
 The Optimal Policy $\pi^*$ is the policy that maximizes the expected return from all states. This is simply the policy $\pi$ whose state-value function $V^\pi(s)$ is equal to the optimal state-value function $V^*(s)$ for all states $s$.
 
 ## Planning
-
-We define the model as the components of an MDP that describe the environment's dynamics. Specifically, these are the transition function $P(s' | s,a)$ and/or the reward function $R(s, a, s')$. 
-
-Planning is about finding the optimal policy $\pi^*$ when the model is known. In cases where the model is unknown, we use Reinforcement Learning.
-
+We define the model as the components of an MDP that describe the environment's dynamics. Specifically, these are the transition function $P(s' | s,a)$ and/or the reward function $R(s, a, s')$. **Planning** is about finding the optimal policy $\pi^*$ when the model is known. In cases where the model is unknown, we use **Reinforcement Learning**.
+### Online vs Offline Planning
 Offline planning involves computing the optimal policy $\pi^*$ for the entire state space. Online planning (or lookahead planning) is used to find the single best action for the current state only.
+### Generalized Policy Iteration
+Generalized Policy Iteration (GPI) is a form of offline planning that finds the optimal policy by repeatedly alternating between policy evaluation (computing the current value function $V^\pi(s)$) and policy improvement (updating the policy $\pi$ based on the current value function $V^\pi(s)$). 
 
-Generalized Policy Iteration (GPI) is a form of offline planning that finds the optimal policy by repeatedly alternating between policy evaluation (computing the current value function $V^\pi(s)$) and policy improvement (updating the policy $\pi$ based on the current value function $V^\pi(s)$). Examples:
+Examples:
 - Policy iteration (PI): We iterate between evaluating a policy and improving it.
     - Policy evaluation: Given a policy $\pi$, calculate its value function $V_\pi$. One can solve for  $V_\pi$ directly, or more commonly use Iterative Policy Evaluation (IPE). IPE repeatedly goes through all states and applies the bellman expectation equation as an update rule until the values converge: $$v_{k+1}(s) \leftarrow \sum_{a\in A(s)}\pi(a|s)\sum_{s'} P(s'|s,a)[R(s,a,s') + \gamma v_k(s')]$$
-    - Policy Improvement: Once $V_\pi$ has converged we can improve the policy, we calculate the action-value function $q_\pi(s,a)$, which is the value of taking action $a$ once and then following $\pi$ thereafter.
-        - $q_{\pi}(s,a) = \sum_{s'} P(s'|s,a) [R(s,a,s') + \gamma v_{\pi}(s')]$
-    - Then we create a greedy policy $\pi'$ that picks the action that maximizes the Q-value in every state.
-        - $\pi'(s) \gets \arg\max_a q_\pi(s,a)$
-    - We repeat Policy Evaluation and Policy Improvement until the updated policy $\pi'$ is the same as the previous policy $\pi$ in which case the optimal policy $\pi^*$ has been found.
-- Value Iteration (VI): Shortens the policy evaluation to a single iteration, creating a single update rule. Generally more efficient than PI due to the fact that full policy evaluation can be slow.
-    - $v_{k+1}(s) \leftarrow \max_a \left\{ \sum_{s'} P(s'|s,a) [R(s,a,s') + \gamma v_k(s')] \right\}$
-
+	- Policy Improvement: Once $V_\pi$ has converged we can improve the policy, we calculate the action-value function $q_\pi(s,a)$, which is the value of taking action $a$ once and following $\pi$ thereafter. $$q_{\pi}(s,a) = \sum_{s'} P(s'|s,a) [R(s,a,s') + \gamma v_{\pi}(s')]$$
+	- Finally we create a greedy policy $\pi'$ that picks the action that maximizes the Q-value in every state. $\pi'(s) \gets \arg\max_a q_\pi(s,a)$
+	- We repeat Policy Evaluation and Policy Improvement until the updated policy $\pi'$ is the same as the previous policy $\pi$ in which case the optimal policy $\pi^*$ has been found.
+- Value Iteration (VI): Shortens the policy evaluation to a single iteration, creating a single update rule. Generally more efficient than PI due to the fact that full policy evaluation can be slow. $$v_{k+1}(s) \leftarrow \max_a \left\{ \sum_{s'} P(s'|s,a) [R(s,a,s') + \gamma v_k(s')] \right\}$$
 Dynamic Programming on (Lookahead) Trees is a form of online planning, used to find the best action for the current state by looking ahead for a fixed finite number of steps. Process:
-
 - Build the Tree: The algorithm starts at the current state and expands a tree of possible action-outcome sequences.
 - Assign terminals: At the leaves of the tree states are assigned their terminal reward value.
 - Propagate backward: The algorithm moves up the tree, calculating the value of each node:
     - At a state node: The value $V(s)$ is the value of the best action that can be taken from it. $V(s) = \max_a Q(s,a)$
     - At an action node: The value $Q(s,a)$ is the expected value from all possible outcomes. It’s the intermediate reward plus the discounted expected value of the next states. $Q(s,a) = \Sigma_{s'}P(s'|s,a)[R(s,a,s') + \gamma V(s')]$
 - Select action: Once the values are backed up to the root, the agent simply picks the action $a$ with the highest Q-value.
-
 The main limitation is that the tree grows exponentially with the horizon, making it computationally impractical for deep searches.
 
 ## Reinforcement Learning
