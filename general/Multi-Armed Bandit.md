@@ -1,4 +1,4 @@
-Multi-Armed Bandit (MAB) problem: An agent is faced with $n$ actions (slot machines), each action $a$provides a reward drawn from a probability distribution with unknown mean $\mu_a$. The agents goal is to maximize its total reward after some $T$ actions.
+Multi-Armed Bandit (MAB) problem: An agent is faced with $n$ actions (slot machines), each action $a$ provides a reward drawn from a probability distribution with unknown mean $\mu_a$. The agents goal is to maximize its total reward after some $T$ actions.
 
 The key trade off lies between:
 - Exploitation: Taking the action that has the current highest mean reward reward $Q(a)$.
