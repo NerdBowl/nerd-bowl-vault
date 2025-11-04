@@ -44,7 +44,6 @@ The Bellman equations are the foundational equations for Markov Decision Process
     - $Q^*(s,a) = \max_\pi Q^\pi(s,a) = \Sigma_{s' \in S} P(s' | s,a) [R(s'|s,a) + \gamma V^*(s') ]$
 
 The Optimal Policy $\pi^*$ is the policy that maximizes the expected return from all states. This is simply the policy $\pi$ whose state-value function $V^\pi(s)$ is equal to the optimal state-value function $V^*(s)$ for all states $s$.
-
 ## Planning
 We define the model as the components of an MDP that describe the environment's dynamics. Specifically, these are the transition function $P(s' | s,a)$ and/or the reward function $R(s, a, s')$. **Planning** is about finding the optimal policy $\pi^*$ when the model is known. In cases where the model is unknown, we use **Reinforcement Learning**.
 ### Online vs Offline Planning
