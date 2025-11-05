@@ -1,1 +1,7 @@
-.obsidian/
+# Allow snippets to be shared to git.
+.obsidian/plugins
+.obsidian/themes
+.obsidian/*.json
+
+# Prevent .idea
+.idea

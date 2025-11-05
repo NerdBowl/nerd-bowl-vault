@@ -1,0 +1,12 @@
+/* Change the central spacing variables */
+.markdown-rendered p,
+.markdown-rendered ul,
+.markdown-rendered ol,
+.markdown-rendered blockquote 
+{
+   margin-block-start: 0.8em;
+   margin-block-end: 0.8em;
+}
+
+
+

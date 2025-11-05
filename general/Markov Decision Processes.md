@@ -1,6 +1,7 @@
 ## Markov Decision Process (MDP)
 A Markov Decision Process (MDP) is a mathematical framework used to model sequential decision-making in an environment where outcomes are partly random and partly under the control of an agent.
-It is formally defined as a 5-tuple **$(S, A, P, R, \gamma)$** where:
+
+It is formally defined as a 5-tuple $(S, A, P, R, \gamma)$ where:
 - $S$ is the state space. The set of all possible states $s \in S$ the agent can be in.
 - $A(s)$ is the action space. The set of all possible actions the agent can take in state $s$.
 - $P(s' | s,a)$ is the transition probability function. It describes the probability of transitioning to a new state $s'$  after the agent takes action $a$ in state $s$.
@@ -17,10 +18,8 @@ This means the probability of the next state $s'$ and rewards $r$ depend only on
 
 The goal for any agent is to maximize the return. The return $G_t$ is defined as the (discounted $\gamma \in [0,1]$) sum of rewards $r$, starting from timestep $t$. We distinguish between two cases:
 
-- Episodic (Finite-Horizon) MDPs are guaranteed to end after a fixed, known, and finite number of timesteps $T$.
-    - $G_t = \Sigma^{T-t}_{k=0} \gamma^k r_{t+k}$.
-- Continuing (Infinite-Horizon) MDPs do not have a fixed, predetermined number of time steps. To keep the return finite, a discount factor is generally used.
-    - $G_t = \Sigma^{\infty}_{k=0} \gamma^k r_{t+k}$
+- Episodic (Finite-Horizon) MDPs are guaranteed to end after a fixed, known, and finite number of timesteps $T$. $$G_t = \Sigma^{T-t}_{k=0} \gamma^k r_{t+k}$$
+- Continuing (Infinite-Horizon) MDPs do not have a fixed, predetermined number of time steps. To keep the return finite, a discount factor is generally used. $$G_t = \Sigma^{\infty}_{k=0} \gamma^k r_{t+k}$$
 
 In order to maximize the return the agent must determine a plan. 
 
@@ -32,16 +31,12 @@ In order to maximize the return the agent must determine a plan.
 The Bellman equations are the foundational equations for Markov Decision Processes. They recursively define the value of a state (or state-action pair) by linking it to the immediate rewards and the discounted values of all possible successor states.
 
 **Bellman Expectation Equations** define the value of a fixed policy $\pi$.
-- State-Value Function: Describes the expected return following policy $\pi$ stating from state $s$.
-    - $V^\pi(s) = \Sigma_{a\in A(s)}\pi(a|s)Q^\pi(s,a)$
-- Action-Value function: Describes the expected return following policy $\pi$ after taking action $a$ in state $s$.
-    - $Q^\pi(s,a) = \Sigma_{s' \in S} P(s' | s,a) [R(s'|s,a) + \gamma V^\pi(s') ]$
+- State-Value Function: Describes the expected return following policy $\pi$ stating from state $s$. $$V^\pi(s) = \Sigma_{a\in A(s)}\pi(a|s)Q^\pi(s,a)$$
+- Action-Value function: Describes the expected return following policy $\pi$ after taking action $a$ in state $s$. $$Q^\pi(s,a) = \Sigma_{s' \in S} P(s' | s,a) [R(s'|s,a) + \gamma V^\pi(s') ]$$
 
 **Bellman Optimality Equations** define the value of the optimal policy $\pi^*$.
-- Optimal State-Value function: Describes the maximal return starting from state $s$.
-    - $V^*(s) = \max_{\pi} V^\pi(s) = \max_{a \in A(s)}Q^*(s,a)$
-- Optimal Action-Value function: Describes the maximal return after taking action $a$ in state $s$.
-    - $Q^*(s,a) = \max_\pi Q^\pi(s,a) = \Sigma_{s' \in S} P(s' | s,a) [R(s'|s,a) + \gamma V^*(s') ]$
+- Optimal State-Value function: Describes the maximal return starting from state $s$. $$V^*(s) = \max_{\pi} V^\pi(s) = \max_{a \in A(s)}Q^*(s,a)$$
+- Optimal Action-Value function: Describes the maximal return after taking action $a$ in state $s$. $$Q^*(s,a) = \max_\pi Q^\pi(s,a) = \Sigma_{s' \in S} P(s' | s,a) [R(s'|s,a) + \gamma V^*(s')]$$
 
 The Optimal Policy $\pi^*$ is the policy that maximizes the expected return from all states. This is simply the policy $\pi$ whose state-value function $V^\pi(s)$ is equal to the optimal state-value function $V^*(s)$ for all states $s$.
 ## Planning
@@ -127,8 +122,7 @@ Instead we use a belief state $b(s)$ which compresses the history in a single fi
 - The belief is a probability distribution over the hidden states, $b(s) = P(s | h_t)$.
 - The belief is a sufficient statistic for the history; all the necessary information from the past is captured in this distribution.
 - After each step $(a, o)$, the agent computes a new belief $b'$ from its previous belief $b$, after taking action $a$ and seeing observation $o$. This is derived using Bayes’ rule.
-    - $b'(s') =P(s' | o, a, b)= \frac{P(o | s', a, b) \times P(s' | a, b)}{P(o | a, b)}$
-    , which after simplification becomes:
+    - $b'(s') =P(s' | o, a, b)= \frac{P(o | s', a, b) \times P(s' | a, b)}{P(o | a, b)}$, which after simplification becomes:
     - $b'(s') \propto P(o | a, s') \sum_{s \in S} P(s' | s, a) b(s)$
 
 Some Resources:
