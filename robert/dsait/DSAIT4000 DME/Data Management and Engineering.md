@@ -34,10 +34,48 @@ Lecture 2: Data models
 	- Weak Entities: Sometimes the attributes of an entity are not sufficient to identify its occurrences unambiguously. Other entities are involved in identification. The relationship relating an entity to its owner is the identifying relationship.
 	![[Pasted image 20251106140544.png]]
 - EER (Enhanced-ER) is an extension of ER that allows for more complex requirements:
-	- Inheritance: Subclasses and Superclasses, Specialisation and Generalisation.
-- 
+	- Specialization (top-down): You define specific subgroups (subclasses) for a general entity.
+	- Generalization (bottom-up): You find several entities with common features and create a new more general entity (a superclass). 
+	- Disjoint vs Overlapping: An instance of a superclass can be in only one subclass (disjoint) or in multiple (overlapping).
+	- Total vs Partial: Every instance of the superclass belongs to at least one subclass (total), or some instances may just belong to the superclass (partial).
+	- Category (or union type): A category models an entity (subclass) that is a union of different superclasses. 
+- Aggregate Data: Treat a collection of related data as a single unit. This is different from the relational model which encourages to decompose into multiple separate tables. Examples:
+	- Key-value models: Treat each of the aggregates as a value, accessible only by a unique key.
+	- Document models: Key-value, but the values follow a specified structure allowing queries on data inside the aggregate (e.g. JSON, XML)
+	- Column-Family Models: store data in a large, sparse table where a row key identifies an aggregate and "column families" group related data within that aggregate.
 
 Lecture 3: Discovering Data
+- SQL: Declarative Language: Describes the desired result without specifying how to compute it.
+- Relational Algebra: Procedural Language: Shows step-by-step procedure for computing the result. Components:
+	- Basic: Selection $\sigma$, Projection $\pi$, Rename $\rho$, Union $\cup$, Intersection $\cap$, set difference $\setminus$, Cartesian product $\times$.
+	- Extended: Theta-join $⋈_{(θ-\text{cond})}$, Equi-join $⋈_{(=-\text{cond})}$, Natural Join $⋈$
+	- Advanced: Aggregation $\gamma$, Outer joins.
+- Data Lake: flexible, scalable data storage and management system where raw data from different sources can be ingested in their original (structured or unstructured) format.
+- Data Warehouses: store data in a structured format. 
+- Data lake architectures:
+	- Pond: partitions ingested data by their status and usage.
+	- Zone architecture: Separates dataset standardization into different stages.
+	- Function-based architecture: Big jumble mess
+- Data Discovery: Finding relevant or related data. 
+	- Data lakes use metadata to store relationships between datasets. 
+	- Jaccard Similarity: $s(X,Y) = |X \cap Y| /|X \cup Y|$
+	- Set containment: $t(X, Y) = |X \cap Y|/|X|$ size agnostic for $Y$
+	- Set overlap: $o(X,Y)=|X\cap Y|$
+- Aforementioned methods cannot be feasibly computed for large data lakes. Se we approximate, trading speed less computation for less accuracy. 
+	- Local Sensitive Hashing (LSH): Similar objects wind up in the same bucket while other pairs rarely do. Steps:
+		- Shingling: k-shingle for a document is a sequence of k characters that appear in the document. Compute multiple such shingles. Then create a set of all shingles that occurred in the document.
+		- Min-hashing: 
+			- The input matrix has a column for each of the sets, and a row for each of the possible set elements. Each element in the matrix is a zero if the set did not contain the element, and a one if it does. 
+			- The min hash function $h(C)$ is the index of the first row in which column $C$ has a one. We apply the min hash function to all columns across several ($b\cdot r$) randomly chosen permutations to create a signature for each column. 
+			- Result is a signature matrix where the columns are the sets, rows are the permutations, and the elements are the corresponding min hash values.
+		- Locality-sensitive hashing (LSH): 
+			- We divide the signature matrix into $b$ bands (of $r$ rows).
+			- For each band, hash each of the columns, and divide into $k$ buckets.
+		- The approximation of the Jaccard similarity is then the percentage of bands for which two sets end up in the same buckets.
+	- Lazo: is an LSH index that uses OPH/MinHash, supporting both set containment and jaccard similarity, and returns similarity scores. 
+	- JOSIE: Exact top-k search for finding joinable tables. Given a query column $Q$ find top-$k$ columns ($X_1, \dots X_k$) from the data lake with the highest set overlap size $|Q \cap X_i|$. JOSIE is a drop-in component utilizing inverted index for finding joinable tables.
+	- 
+	
 Lecture 4: Obtaining Data 
 Lecture 5: Data Quality and Coding
 Lecture 6: Data Integration
