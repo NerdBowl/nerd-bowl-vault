@@ -1,2 +1,2 @@
-- LaPlace Transforms
+- Laplace Transforms
 - Connection to probability theory (MGF)
