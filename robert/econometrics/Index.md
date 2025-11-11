@@ -9,18 +9,25 @@ Enrollment email:
 Block 1 (1 Sep. - 26 Okt.)
 
 - ~~FEB21011S Introduction to Programming (pre-master)~~ Exemption!
-
-[FEB21005S Probability Theory (pre-master)](FEB21005S%20Probability%20Theory%20(pre-master).md)
-
-- 100% Written exam
+- [FEB21005S Probability Theory (pre-master)](FEB21005S%20Probability%20Theory%20(pre-master).md)
+	- 100% Written exam
 - ~~FEB21007S Statistics (pre-master)~~ Exemption!
 - ~~FEB22003X Introduction to Multivariate Statistics~~ Exemption!
 
 Block 2 (27 Okt. - 21 Dec.)
 
 - FEB22006X Non-linear Optimisation
+	- 20% Individual assignment
+		- Assignment 1 (18 Nov at 23.59)
+	- 80% Written exam
+	- [[Non-linear Optimisation]]
 - FEB22008X Markov Processes
+	- 100% Written exam
+	- [[Markov Processes]]
 - FEB21020X Microeconomics (econometrics)
+	- 100% Written exam
+	- (or 10% attendance grade)
+	- [[Microeconomics]]
 
 Block 3 (5 Jan. - 1 Mar.)
 

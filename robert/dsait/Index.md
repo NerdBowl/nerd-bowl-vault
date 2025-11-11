@@ -9,22 +9,22 @@ Q1 (1 Sep. - 9 Nov.)
     - 40% Group assignments
 - DSAIT4005 **Machine and Deep Learning**
     - 100% Digital exam
-
-[DSAIT4005 MDL](DSAIT4005%20MDL.md)
-
+    - [DSAIT4005 MDL](DSAIT4005%20MDL.md)
 - DSAIT4010 **Probabilistic AI and Reasoning**
     - 100% Written exam
-
-[Probabilistic AI and Reasoning](Probabilistic%20AI%20and%20Reasoning.md)
+    - [Probabilistic AI and Reasoning](Probabilistic%20AI%20and%20Reasoning.md)
 
 Q2 (10 Nov. - 1 Feb.)
 
 - DSAIT4015 **Software Engineering and Testing for AI Systems**
-    - Need to Enroll!
+	- 70% Group report
+	- 30% Digital exam
 - DSAIT4020 **Elements of Statistical Learning**
-    - Enrolled!
+	- 70% Digital exam
+	- 30% Group report
 - CS4530 **Modelling and Problem Solving**
-    - Enrolled!
+    - 60% Digital exam
+    - 4 Group Assignments, each 10%
 
 Q3 (9 Feb. - 19 Apr.)
 
