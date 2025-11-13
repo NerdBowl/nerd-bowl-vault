@@ -1,0 +1,6 @@
+- Experiment: Any action whose outcome is subject to uncertainty.
+- Sample space $S$: The set of all outcomes of an experiment.
+- Event $A$: collection of outcomes, $A \subseteq S$. 
+	- Simple if only one outcome, compound otherwise.
+	- We say $A$ occurs, when an outcome belongs to $A$.
+	- 
