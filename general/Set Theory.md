@@ -1,6 +1,6 @@
 Sets
 - Set $S$: a collection of distinct objects.
-- An object $x$ is an element (or member) of set $S$, if the set contains the object. Denoted $x \in S$. 
+- An object $x$ is an element (or member) of $S$, if $S$ contains the object. Denoted $x \in S$. 
 - A set $A$ is a **subset** of set $B$ if every element in $A$ is also an element of $B$. Denoted $A \subseteq B$.
 - The **empty** Set $\emptyset$ is the set that contains no elements.
 - The **universal** set $U$ is the set containing all elements within a specific context.
@@ -13,6 +13,8 @@ Sets operations
 - **Intersection ($A \cap B$):** The set of all elements that are in **both** set $A$ and set $B$.
 - **Difference ($A \setminus B$ or $A - B$):** The set of all elements that are in set $A$ but **not** in set $B$.
 - **Complement ($A^c$ or $A'$):** The set of all elements in the universal set ($U$) that are **not** in set $A$. This is the same as $U \setminus A$.
+
+	![[Pasted image 20251113171353.png|400]]
 
 Set laws
 - **Commutative Laws:** The order doesn't matter for union or intersection.
