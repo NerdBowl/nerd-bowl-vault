@@ -93,7 +93,7 @@ Moment generation functions:
 - If X is a random variable then the expected value $M_X(t) = E(e^{tX})$ is called the moment generating function MGF of X. But only if the expectation exists for all values of $t$ within some interval $|t| < h$ for some $h > 0$.
 - The $r$-th derivative of $M_X(t)$ at $t=0$ equals the $r$-th moment $u'_r$
 - We may expand  $M_X(t) = 1 + \sum^\infty_{r=1} E(X^r)t^r / r!$
-- Let $X$ and $Y$ be random variables such that $Y = aX + b$, then $M_Y(t) = e^{bt} * M_X(at)$
+- Let $X$ and $Y$ be random variables such that $Y = aX + b$, then $M_Y(t) = e^{bt} \cdot M_X(at)$
 
 Common distributions are given on your cheat-sheet
 
