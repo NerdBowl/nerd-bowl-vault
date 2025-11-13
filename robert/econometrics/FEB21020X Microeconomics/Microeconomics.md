@@ -16,6 +16,8 @@ Supply and Demand
 - A market consists of the buyers and sellers of a good or service.
 - Sometimes the choice of market definition will depend on the bias of the observer. 
 	- EU competition law attempts to prevent mergers between companies that would impede competition. A measure of competition is market share, the European Commission may therefore define markets narrowly making the combined market share as large as possible.
-	- Two otherwise identical products are often classified as separate if they differ only with respect to the times or places they are available. ex. umbrella on a sunny day vs umbrella during rain.
-- Demand curve describes the quantity of $x$ buyers wish to purchase at various possible prices $p$ (holding all else constant). We notice as price falls, quantity demanded increases (law of demand).
+	- Two otherwise identical products are often classified as separate if they differ only with respect to the times or places they are available. For example: umbrella on a sunny day vs umbrella during rain.
+- The **demand curve** describes the quantity of a good or service buyers wish to purchase at various possible prices, holding all else constant. We notice as price falls, quantity demanded increases (law of demand).
+- The **supply curve** describes the quantity of a good or service suppliers are willing to supply at various possible prices, holding all else constant. We notice as price increases, quantity supplied increases (law of supply).
+- Suppose we view the supply and demand curves as the set of price-quantity pairs for which suppliers and buyers are satisfied. Buyers are willing to buy the same amount at a lower price, and suppliers are willing to supply the same for a higher price. Equilibrium is given by the price-quantity pair at which both buyers and sellers are satisfied. 
 - 
