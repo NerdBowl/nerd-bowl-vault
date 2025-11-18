@@ -474,16 +474,16 @@ if $h$ is *strictly decreasing*, then: $f_Y(y)=-f_X(h^{-1}(y)) \cdot {\frac{dh^{
         - Discrete: $f_Y(y)=\sum_{j=1}^{k} f_X(h_j^{-1}(y))$
         - Continuous: $f_Y(y)=\sum_{j=1}^{k} f_X(h_j^{-1}(y)) \cdot |{\frac{dh_j^{-1}(y)}{dy}}|$
         
-        ![image.png](finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image.png)
+        ![image.png](00_Inbox/finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image.png)
         
 
 **Bivariate Transformation**
 
-![image.png](finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%201.png)
+![image.png](00_Inbox/finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%201.png)
 
-![image.png](finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%202.png)
+![image.png](00_Inbox/finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%202.png)
 
-![image.png](finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%203.png)
+![image.png](00_Inbox/finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%203.png)
 
 ### MGF Method (sums / linear combinations)
 
@@ -537,35 +537,35 @@ n!f(y_{1:n}\cdot ... \cdot y_{n:n}) \,\,\,\text{   if } y_{1:n} \le ... \le y_{n
 \end{cases}$
 > 
 
-![image.png](finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%204.png)
+![image.png](00_Inbox/finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%204.png)
 
 **Sample Minimum**
 
-![image.png](finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%205.png)
+![image.png](00_Inbox/finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%205.png)
 
 **Sample Maximum**
 
-![image.png](finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%206.png)
+![image.png](00_Inbox/finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%206.png)
 
 ### Normal Population Results
 
 ### t-Distribution
 
-![image.png](finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%207.png)
+![image.png](00_Inbox/finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%207.png)
 
 ### F-Distribution
 
-![image.png](finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%208.png)
+![image.png](00_Inbox/finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%208.png)
 
 ## Asymptotics (limiting distributions)
 
 ### Convergence in Probability
 
-![image.png](finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%209.png)
+![image.png](00_Inbox/finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%209.png)
 
 ### Law of Large Numbers
 
-![image.png](finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%2010.png)
+![image.png](00_Inbox/finn/Pre-Master%20Econometrics%20&%20Management%20Science/content/image%2010.png)
 
 ### Convergence in Distributions
 

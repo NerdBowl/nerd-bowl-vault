@@ -1,6 +1,6 @@
 [Machine and Deep Learning](Machine%20and%20Deep%20Learning.md)
 
-[Probabilistic AI and Reasoning](finn/Data%20Science%20and%20Artificial%20Intelligence%20Technolog/Probabilistic%20AI%20and%20Reasoning.md)
+[Probabilistic AI and Reasoning](00_Inbox/finn/Data%20Science%20and%20Artificial%20Intelligence%20Technolog/Probabilistic%20AI%20and%20Reasoning.md)
 
 [Probabilistic Models and Inference](Probabilistic%20Models%20and%20Inference.md)
 
