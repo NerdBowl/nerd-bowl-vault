@@ -502,7 +502,7 @@ Normalization is another technique to speed up training.
 
 - It then scales and shifts the noramlized value using two new learnable parameters, $\gamma$ and $\beta$. This allows the network to learn the optimal scale and shift for its hidden layers, or even undo the normalization if needed.
 
-![image.png](00_Inbox/finn/Data%20Science%20and%20Artificial%20Intelligence%20Technolog/content/image.png)
+![image.png](50_Assets/image.png)
 
 - At test time, since there is no mini-batch, EWMA of $\mu$ (the mean) and $\sigma^2$ (the variance) values are used for Batch norm (batch normalization).
 
@@ -725,7 +725,7 @@ The receptive field is the region of the original input image that a single acti
 
 **Example Network** In the image shown to the right, we can see a 32x32 image being fed into a CNN. In the first layer (C1), 6 feature maps are created, using 6 5x5 kernels/filters. Then the resulting feature maps are subsampled, using either 2x2 max-pooling, or averaging. 
 
-![image.png](00_Inbox/finn/Data%20Science%20and%20Artificial%20Intelligence%20Technolog/content/image%201.png)
+![image.png](50_Assets/image%201.png)
 
 The next layer, C3, applies 16 filters to the resulting 6 14x14 maps. The kernels here have to process the 3D volume of the input (6x14x14) at once to create one new feature map.  The resulting output is 16 new maps with size 10x10. These are again subsampled and fed into fully connected layers. 
 
@@ -747,7 +747,7 @@ Here, $X_t$ is the input, $H_t$ is the hidden state, and $O_t$  is the output at
 
 In essence, a Recurrent Neural Network (RNN) processes a sequence one item at a time using a single, core network cell. This cell re-uses the exact same weights (parameters) for every step. At each time step, it takes two inputs: the current piece of data from the sequence and the hidden state (or memory) from the previous step. It then produces an output for that step and an updated hidden state, which it passes forward to be used with the next item in the sequence.
 
-![image.png](00_Inbox/finn/Data%20Science%20and%20Artificial%20Intelligence%20Technolog/content/image%202.png)
+![image.png](50_Assets/image%202.png)
 
 ### Gradient Problems
 
@@ -993,7 +993,7 @@ The core technology enabling modern foundation models is the **Transformer archi
 - **Output Layers:** The final decoder output is passed through a **Linear** layer to "de-embed" it back to the vocabulary size, followed by a **Softmax** layer to produce word probabilities.
 - **Training Task (Decoder):** The model is trained on **next-token prediction**, where the "Outputs" are the "Inputs" shifted one position to the right.
 
-![image.png](00_Inbox/finn/Data%20Science%20and%20Artificial%20Intelligence%20Technolog/content/image%203.png)
+![image.png](50_Assets/image%203.png)
 
 ### Vision Transformer (ViT) Process
 
