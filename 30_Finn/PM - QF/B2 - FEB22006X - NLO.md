@@ -1,4 +1,4 @@
-# Non-Linear Optimisation
+# Non-Linear Optimization
 
 # Course Information
 
@@ -28,55 +28,76 @@ The final grade is based on the following:
 
 The resit covers the same material as the exam, and also counts for 80%. There is no minimum grade for the exam or resit to get a valid grade. In general, partial results – such as assignment grades – of previous years are not valid in the current academic year.
 
-# Summary
+# Week 1: Unconstrained Analysis
 
-## Unconstrained Analysis
-# Week 1 - Unconstrained Analysis
+## 1. The Optimization Problem
+We focus on **Unconstrained Optimization** where $X = \mathbb{R}^n$. The goal is to find the minimizer.
 
-## Mathematical Optimization Framework
-* Introduction to the general problem structure.
-![[10_Concepts/Mathematical Optimization#Summary]]
-* Distinction between Unconstrained and Constrained problems.
+![[Mathematical Optimization#Definition]]
 
-## Minimizers and Infima
-* Defining the goal of optimization.
-![[10_Concepts/Global Minimizer#Summary]]
-![[10_Concepts/Local Minimizer#Summary]]
-![[10_Concepts/Infimum#Summary]]
-![[10_Concepts/Minimum]]
-## First-Order Conditions (Gradients)
-* Using derivatives to find candidate points.
-![[10_Concepts/Gradient]]
-![[10_Concepts/Gradient#Stationary Point]]
-* **Necessary Condition:**
-![[10_Concepts/Fermat's Theorem (Optimization)#Summary]]
+### Minima vs Infima
+It is crucial to distinguish between the mathematical minimum and the infimum.
 
-## Convexity
-* Using convexity to guarantee global optimality.
-![[Convex Function#Summary]]
-![[Hessian Matrix#Summary]]
-![[Positive Semidefinite Matrix#Summary]]
-* **Testing for Convexity:**
-![[Second-Order Convexity Condition#Summary]]
-* **The Power of Convexity:**
-![[Convex Fermat Theorem#Summary]]
+![[Optimal Values#Minimum]]
 
-## Second-Order Conditions
-* Checking if a stationary point is actually a minimizer.
-* **Necessary Condition:**
-![[Second-Order Necessary Condition#Summary]]
-* **Sufficient Condition:**
-![[Second-Order Sufficient Condition#Summary]]
+![[Optimal Values#Infinum]]
 
-## Existence of Minimizers
-* Ensuring a solution exists before searching for it.
-![[Weierstrass Theorem#Summary]]
-* Strategy for proving global optimality using Weierstrass.
+## 2. Finding Candidates (Stationary Points)
+To find a minimizer, we first look for stationary points.
 
-## Gradient Descent
+![[Gradients#Stationary Points]]
+![[Fermat's Theorem (Optimization)#Fermat's Theorem]]
 
-## More Line Search
+## 3. Proving Optimality via Convexity
+If we can prove the function is convex, the search becomes much easier.
 
-## Analysis of Constrained Optimization
+![[Convexity#Convex Functions]]
 
-## Convex Optimisation in Practice
+![[Convexity#Strict Convexity]]
+
+> **Theorem:** If $f$ is convex, any stationary point is a **Global Minimizer**.
+
+## 4. General Conditions for Local Minimizers
+If the function is *not* convex, we rely on second-order conditions.
+
+![[10_Concepts/Second-Order Optimization Conditions#Summary]]
+
+**Example:**
+For $f(x) = 3x^4 + 8x^3 - 18x^2$:
+* $x=0$: Hessian is negative (local max).
+* $x=1$: Hessian is positive (local min).
+* $x=-3$: Hessian is positive (local min).
+
+## 5. Existence of Global Minimizers
+How do we know a solution exists at all?
+
+![[10_Concepts/Weierstrass Theorem#Summary]]
+
+## Roadmap: Finding the Global Minimizer
+When faced with an unconstrained problem $\min_{x \in \mathbb{R}^n} f(x)$, follow this decision tree:
+
+### Step 1: Find Stationary Points
+Solve the gradient equation for $x$:
+$$\nabla f(x) = 0$$
+* *Outcome:* You get a set of candidate points $x^*_1, x^*_2, \dots$.
+
+### Step 2: Check Convexity (The "Happy Path")
+Check the Hessian matrix $\nabla^2 f(x)$ for all $x$.
+* **Is $\nabla^2 f(x) \succeq 0$ (Positive Semi-Definite) everywhere?**
+    * **YES:** $f$ is convex. All stationary points found in Step 1 are **Global Minimizers**. You are done.
+    * **NO:** Proceed to Step 3.
+
+### Step 3: Classify Local Candidates (The "Hard Path")
+Since $f$ is not convex, we must check each candidate individually using **Second-Order Conditions**.
+* Calculate the Hessian $\nabla^2 f(x^*)$ at each specific candidate point.
+    * **If Indefinite:** Saddle point (ignore).
+    * **If Negative Definite:** Local Maximum (ignore).
+    * **If Positive Definite:** **Local Minimizer** Keep this candidate.
+
+### Step 4: The Global Argument (Weierstrass)
+You now have a list of Local Minimizers. To prove one is **Global**, you must rule out that the function dips to $-\infty$ somewhere far away.
+* **Check Limits:** Does $\lim_{||x|| \to \infty} f(x) = \infty$?
+    * **YES:** You can restrict the domain to a compact set (Box). By **Weierstrass**, a global minimum exists. It *must* be one of your local minimizers.
+    * **Compare:** Evaluate $f(x)$ at all local minimizers. The one with the lowest value is the **Global Minimizer**.
+
+

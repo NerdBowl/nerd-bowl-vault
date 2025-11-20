@@ -1,14 +1,24 @@
 ---
 tags:
+  - topic/calculus
+  - topic/optimization
 aliases: []
-status: not_started
-created: <% tp.file.creation_date() %>
+status: good_enough
+created: 2025-11-20 14:57
 ---
-# <% tp.file.title %>
+## Gradient
+Let $f : \mathbb{R}^n \to \mathbb{R}$ be partially differentiable at some point $\mathbf{x}^* \in \mathbb{R}^n$. Then, the $\textbf{gradient}$ of $f$ at $\mathbf{x}^*$ is
 
-## Summary
+$$
+\nabla f(\mathbf{x}^*) := \begin{bmatrix} 
+\frac{\partial f(\mathbf{x}^*)}{\partial x_1} \\ 
+\vdots \\ 
+\frac{\partial f(\mathbf{x}^*)}{\partial x_n} 
+\end{bmatrix}
+$$
 
-## Details
+## Stationary Points
+Any point $\mathbf{x}^*$ where $\nabla f(\mathbf{x}^*)=0$ is called stationary.
 
 ---
 

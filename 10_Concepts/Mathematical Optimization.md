@@ -1,16 +1,22 @@
 ---
 tags:
-aliases: []
-status: not_started
-created: <% tp.file.creation_date() %>
+  - topic/optimization
+aliases:
+  - optimization
+status: good_enough
+created: 2025-11-20 11:02
 ---
-# <% tp.file.title %>
+# Mathematical Optimization
 
-## Summary
-
-## Details
-
----
+## Definition
+Mathematical optimization problems are problems of the form 
+$$
+\min_{{\mathbf{x}\in X}}f(\mathbf{x)}
+$$
+where $f:X\rightarrow \mathbb{R}$ is a function, and $X \subseteq \mathbb{R}^n$ is a set. 
+- If $X=\mathbb{R}^n$, we call the problem *unconstrained*
+- If $X\not=\mathbb{R}^n$, we call the problem *constrained*
+In particular if $X$ is a polyhedron and $f$ is linear, the optimization problem is *linear*.
 
 # Related
 ```dataviewjs

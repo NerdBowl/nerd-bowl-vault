@@ -2,9 +2,9 @@
 tags:
 aliases: []
 status: not_started
-created: <% tp.file.creation_date() %>
+created: 2025-11-20 18:02
 ---
-# <% tp.file.title %>
+# Lagrange Multipliers
 
 ## Summary
 

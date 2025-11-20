@@ -169,4 +169,25 @@ WHERE contains(file.inlinks, this.file.link)
 AND status != "perfect"
 SORT status ASC
 ```
+
+## Obsidian Bugs
+When using 
+$$
+\text{MATH BLOCKS}
+$$
+Make sure to put them fully on a new line. Otherwise there will be parsing issues.
+```markdown
+
+WRONG:
+blablabla $$
+FORMULA
+$$
+
+RIGHT:
+bklaskjdfs
+$$
+FORMULA
+$$
+
 ```
+
