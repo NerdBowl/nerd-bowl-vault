@@ -16,7 +16,7 @@ f(\mathbf{x}^*)\le f(\mathbf{x}) \quad \forall \mathbf{x}\in X
 $$
 
 ### Local Minimizer
-Let $X\subseteq \mathbb{R}^n$, and let $f:X\rightarrow\mathbb{R}$ be a functioin. A point $\mathbf{x}^* \in X$ is a *local minimizer* of $f$ over $X$ if there exists an $\epsilon>0$ such that 
+Let $X\subseteq \mathbb{R}^n$, and let $f:X\rightarrow\mathbb{R}$ be a function. A point $\mathbf{x}^* \in X$ is a *local minimizer* of $f$ over $X$ if there exists an $\epsilon>0$ such that 
 $$
 f(\mathbf{x}^*)\le f(\mathbf{x}) \quad \forall \mathbf{x}\in X \text{ with } ||\mathbf{x}-\mathbf{x}^*|| < \epsilon 
 $$

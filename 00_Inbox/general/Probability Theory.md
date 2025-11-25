@@ -37,7 +37,7 @@ Probability density function (PDF)
     - Properties: A function $f(x)$ with a countable support $\{x_1, x_2, \ldots\}$ is a discrete PDF if and only if:
         - $f(x) \geq 0$  for all $x$
         - $\sum_if(x_i) = 1$
-- A **continuous probability density function** is the derivative of its corresponding continuous CDF $f_X(x) = F'_X(x)$. It does not directly assign a probability, instead the area under its curve corresponds to a probability.
+- A **continuous probability density function** is the derivative of its corresponding CDF $f_X(x) = F'_X(x)$. It does not directly assign a probability, instead the area under its curve corresponds to a probability.
     - Properties: A function $f(x)$ is a valid continuous PDF if and only if:
         - $f(x) \geq 0$ for all $x$
         - $\int_{-\infty}^\infty f(x)dx=1$
@@ -95,3 +95,11 @@ Inequalities
 - Markov inequality: For a random variable $X$ that only takes non-negative values, it holds that for every $c \geq 0$: $P(X \geq c) \leq E(X) / c$
 - Chebyshev inequality: For every random variable $X$ with expected value $\mu$ and variance $\sigma^2 > 0$ it holds that for every $k \gt 0$: $P(|X - \mu| \geq k\sigma) \leq 1 / k^2$
     - consequently, $P(|X - \mu| \lt k\sigma) \geq 1- 1 / k^2$
+
+Conditional expectation 
+
+- The **conditional expectation** of a random variable $X$ given that a random variable $Y$ has taken the value $y$, denoted as $E(X \mid Y=y)$, is the expected value of $X$ computed with respect to the conditional probability distribution $f_{X|Y}(x|y)$.
+    - Discrete case: $E(X \mid Y=y) = \sum_{x} x \cdot P(X=x \mid Y=y)$
+    - Continuous case: $E(X \mid Y=y) = \int_{-\infty}^{\infty} x \cdot f_{X|Y}(x|y) \, dx$
+- **Note:** While $E(X \mid Y=y)$ is a value (a function of $y$), $E(X \mid Y)$ is a random variable that depends on the outcome of $Y$.
+- It states that the expected value of $X$ is equal to the expected value of the conditional expectation of $X$ given $Y$:$$E(X) = E(E(X \mid Y))$$
