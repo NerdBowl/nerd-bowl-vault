@@ -102,4 +102,6 @@ Conditional expectation
     - Discrete case: $E(X \mid Y=y) = \sum_{x} x \cdot P(X=x \mid Y=y)$
     - Continuous case: $E(X \mid Y=y) = \int_{-\infty}^{\infty} x \cdot f_{X|Y}(x|y) \, dx$
 - **Note:** While $E(X \mid Y=y)$ is a value (a function of $y$), $E(X \mid Y)$ is a random variable that depends on the outcome of $Y$.
-- It states that the expected value of $X$ is equal to the expected value of the conditional expectation of $X$ given $Y$:$$E(X) = E(E(X \mid Y))$$
+- **Law of Total Expectation** states that the expected value of $X$ is equal to the expected value of the conditional expectation of $X$ given $Y$: $E(X) = E(E(X \mid Y))$.
+	- Discrete: $E(X) = \sum_{y} E(X \mid Y=y) \cdot P(Y=y)$
+	- Continuous: $E(X) = \int_{-\infty}^{\infty} E(X \mid Y=y) \cdot f_Y(y) \, dy$
