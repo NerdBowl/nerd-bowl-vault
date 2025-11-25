@@ -1,7 +1,11 @@
 # Allow snippets to be shared to git.
-.obsidian/plugins
+.obsidian/plugins/*
 .obsidian/themes
 .obsidian/*.json
 
 # Prevent .idea
 .idea
+
+# Allow certain plugins
+!.obsidian/plugins/templater-obsidian
+!.obsidian/plugins/templater-obsidian/*

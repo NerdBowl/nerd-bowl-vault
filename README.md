@@ -1,76 +1,195 @@
-# 👋 Welcome to the Nerd Bowl!
+# 🧠 Data Science & Quant Finance Vault
 
-This is our shared Obsidian vault. We use Git to keep everything in sync.
+Welcome to our shared knowledge base. This vault is designed to decouple **Atomic Concepts** (Truths) from **University Courses** (Contexts). 
 
-## How This Works (Important!)
+By following this structure, we write complex topics (like "Gradient Descent" or "Black-Scholes") **once** and reuse them indefinitely across different courses and projects.
 
-This is **not** a live-syncing service like Google Docs. It's an "asynchronous" collaboration[cite: 735].
+---
 
-The workflow is simple:
-1.  **Pull:** Before you start working, "pull" any changes I might have made.
-2.  **Work:** Create and edit your notes.
-3.  **Commit & Push:** When you're done, you "commit" your changes (creating a save point) and "push" them to GitHub so I can get them.
+## 📂 Folder Structure
 
-The **"Obsidian Git"** plugin helps us do this easily from within Obsidian.
+We use a flat, ID-based structure to prevent nesting hell.
 
-## 💻 Desktop Setup (Recommended)
+* **`00_Inbox`**
+    * Drop zone for messy, unsorted notes. Clean these up and move them weekly.
+* **`10_Concepts`** 🧠 *(The Shared Brain)*
+    * **Atomic notes only.** Definitions, theorems, algorithms.
+    * *Rule:* No course-specific fluff. Just the concept.
+    * *Example:* `[[Bayes Theorem]]`, `[[Markowitz Portfolio Theory]]`.
+* **`15_MOCs`** 🗺️ *(Maps of Content)*
+    * "Table of Contents" files that organize concepts into trees.
+    * *Example:* `$$ Machine Learning MOC` linking to `[[Loss Functions]]`, `[[Optimizers]]`.
+* **`20_Sources`** 📚
+    * Raw reference materials: PDFs, Lecture Slides, Papers.
+* **`30_Finn`** 👤
+    * Finn's private workspace and course notes.
+    * *Structure:* `30_Finn/Advanced ML/Lecture 1`.
+* **`40_Robert`** 👤
+    * Robert's private workspace and course notes.
+* **`50_Assets`** 🖼️
+    * Images, diagrams, CSVs.
+* **`99_System`** ⚙️
+    * Templates, Dataview scripts, and vault configuration.
 
-This is the most stable way to contribute.
+---
+## Concept Splitting
+- Concepts can start broad, e.g. Probability Theory, or Loss Functions
+- Using Headings sub-topics can be specified and linked to from other documents (e.g. Loss Functions#MSE)
+- Obsidian allows for these headings to be extracted into new documents, and links to be refactored accordingly.
+- Concepts can be split up based on this video: 
 
-### 1. Prerequisites
-* Install [Obsidian](https://obsidian.md/).
-* Install [Git](https://git-scm.com/downloads) for your operating system.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/C0KvL8T2vEY?si=wWfggUnalzZtBO7q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-### 2. Clone This Vault
-1.  Open your terminal or command line.
-2.  Clone this repository to a folder on your computer:
-    ```bash
-    git clone [https://github.com/rbmr/nerd_bowl.git](https://github.com/rbmr/nerd_bowl.git)
-    ```
+---
+## 🤝 The Golden Rules of Collaboration
 
-### 3. Open in Obsidian
-1.  In Obsidian, choose **"Open folder as vault"**.
-2.  Select the `nerd_bowl` folder you just cloned.
-3.  When prompted, **"Trust author"** and enable Community Plugins.
+1.  **Don't Duplicate Concepts:** Before writing a note on "Eigenvectors," check `10_Concepts` (Cmd+O). If it exists, improve it; don't recreate it.
+2.  **Smart Transclusion:** When embedding a concept into a course note, **only link the Summary**.
+    * *Bad:* `![[Gradient Descent]]` (Embeds the whole file, including related links).
+    * *Good:* `![[Gradient Descent#Summary]]` (Embeds only the definition).
+3.  **Status Matters:** Update the `status` property (`in_progress` → `good_enough` → `perfect`) so we know which notes are trustworthy.
+4.  **Aliases are Mandatory:** Add aliases for easier searching (e.g., `aliases: [Normal Distribution, Gaussian, Bell Curve]`).
 
-### 4. Install & Configure the Git Plugin
-1.  Go to **Settings** > **Community plugins** > **Browse**.
-2.  [cite_start]Search for and install **"Git"**[cite: 250].
-3.  **Enable** the plugin.
+---
 
-### 5. Set Up Authentication (One-Time)
-You need to tell Git how to log in to GitHub. The best way is to use a [Personal Access Token (PAT)](https://github.com/settings/tokens) and a credential helper to store it securely.
+## 🛠️ Setup Guide (New User)
 
-1.  Run the correct command for your OS in your terminal to set up the credential helper:
-    * [cite_start]**Windows:** `git config --global credential.helper manager` [cite: 17]
-    * [cite_start]**macOS:** `git config --global credential.helper osxkeychain` [cite: 5]
-    * [cite_start]**Linux:** `git config --global credential.helper libsecret` [cite: 31]
-2.  Go back to Obsidian. Open the **Command Palette** (Ctrl+P or Cmd+P).
-3.  Type and run the **"Git: Push"** command.
-4.  A login window should pop up.
-    * **Username:** Your GitHub username
-    * **Password:** Your **Personal Access Token (PAT)** (not your regular GitHub password)
-5.  [cite_start]After this, you shouldn't have to log in again on this computer[cite: 6, 32].
+To make the automation work, install these **Community Plugins**:
 
-## 📱 Mobile Setup (Unstable)
+### 1. Templater (Required)
+* **Why:** Automates metadata (status, dates) and headers.
+* **Settings:**
+    * Template folder location: `99_System/Templates`
+    * Trigger Templater on new file creation: **ON**
 
-[cite_start]**⚠️ Warning:** The Git plugin on mobile is **very unstable**[cite: 170]. [cite_start]It can crash, run forever, or cause errors[cite: 183, 184]. I recommend using this **only for viewing** or making very small changes, if at all.
+### 2. Dataview (Required)
+* **Why:** Powers the Dashboard and Status Trackers.
+* **Settings:** Enable "Enable JavaScript Queries" (optional but recommended).
 
-1.  Create a new, empty vault in Obsidian on your phone.
-2.  [cite_start]Install and enable the **"Git"** community plugin[cite: 203].
-3.  Go to the **Git plugin settings**.
-4.  [cite_start]Under **"Authentication/Commit Author"**, enter your GitHub **Username** and your **Personal Access Token (PAT)** in the password field[cite: 206].
-5.  [cite_start]Open the Command Palette and run **"Git: Clone existing remote repo"**[cite: 208].
-6.  [cite_start]Enter the clone URL: `https://github.com/rbmr/nerd_bowl.git`[cite: 211].
-7.  Follow the prompts. [cite_start]**Do not close Obsidian** until it finishes and asks you to restart[cite: 215].
+### 3. Latex Suite (Required)
+* **Why:** Types math at the speed of thought.
+* **Shortcuts:** `mk` → `$..$`, `dm` → `$$..$$`, `/` → fraction.
 
-## ✨ Our Workflow: The "Commit-and-Sync" Command
+### 4. Excalidraw (Recommended)
+* **Why:** Allows for drawing and rendering of graphs and diagrams
 
-[cite_start]To make syncing easy, always use the **"Commit-and-sync"** command[cite: 750].
+---
 
-This single command will:
-1.  Commit (save) all your local changes.
-2.  Pull any new changes from GitHub.
-3.  Push your new changes to GitHub.
+## 🚀 Workflow: From Lecture to Knowledge
 
-Just run this command from the Command Palette when you start and finish a session!
+### Scenario: You are sitting in a "Quant Finance" lecture.
+
+**Step 1: Create the Course Note**
+* Go to your folder (e.g., `30_Finn/Quant 101`).
+* Create `Lecture 3 - Stochastic Processes`.
+
+**Step 2: The Concept**
+* Professor mentions **"Brownian Motion."**
+* Create `[[Brownian Motion]]` in `10_Concepts`.
+* **Templater** fills the structure.
+* Write the clear definition under the `## Summary` header.
+* Write the proofs under `## Details`.
+* Add links to other concepts (e.g., `[[Random Walk]]`) under `## Related`.
+
+**Step 3: Embed (The Clean Way)**
+* Go back to `Lecture 3` note.
+* Type: `![[Brownian Motion`
+* Type `#` to trigger header search. Select **Summary**.
+* Press Enter.
+* *Result:* `![[Brownian Motion#Summary]]`.
+* *Benefit:* Your course note (and PDF printout) now contains the clean definition, but hides the messy "Related" links and deep-dive proofs.
+
+---
+
+## 📊 Status & Tracking
+
+We track quality using YAML properties. **Do not use tags for status.**
+
+**Valid Statuses:**
+* `not_started`: Created but empty.
+* `in_progress`: Rough notes, maybe unformatted equations.
+* `good_enough`: Accurate, readable, but maybe missing deep intuition.
+* `perfect`: Textbook quality. Clean LaTeX, clear intuition.
+
+### The Dashboard
+Check the `Dashboard` file in the root directory to see a live view of concepts needing work.
+
+---
+
+## 📄 Templates
+
+### Concept Template (`99_System/Templates/New Concept.md`)
+*Note the specific headers used to support the Smart Transclusion workflow.*
+
+```markdown
+---
+tags:
+  - topic/
+aliases: []
+status: not_started
+created: <% tp.file.creation_date() %>
+---
+
+# <% tp.file.title %>
+
+## Summary
+<% tp.file.cursor() %>
+## Details
+
+---
+
+## Related
+- 
+
+`dataview
+TABLE file.folder AS "Context"
+FROM [[#]]
+WHERE file.folder != "10_Concepts"
+SORT file.folder ASC
+`
+
+`dataview
+LIST
+FROM #topic/
+WHERE file.tags = this.file.tags
+AND file.name != this.file.name
+LIMIT 10
+`
+
+```
+
+---
+
+## Course Notes
+You can add this Dataview to see what concepts in this course or lecture still need work
+```
+
+```dataview
+TABLE status as "Current State"
+FROM "10_Concepts"
+WHERE contains(file.inlinks, this.file.link)
+AND status != "perfect"
+SORT status ASC
+```
+
+## Obsidian Bugs
+When using 
+$$
+\text{MATH BLOCKS}
+$$
+Make sure to put them fully on a new line. Otherwise there will be parsing issues.
+```markdown
+
+WRONG:
+blablabla $$
+FORMULA
+$$
+
+RIGHT:
+bklaskjdfs
+$$
+FORMULA
+$$
+
+```
+
