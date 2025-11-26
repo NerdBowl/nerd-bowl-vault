@@ -101,3 +101,187 @@ You now have a list of Local Minimizers. To prove one is **Global**, you must ru
     * **Compare:** Evaluate $f(x)$ at all local minimizers. The one with the lowest value is the **Global Minimizer**.
 
 
+# Week 2: Gradient Descent
+## General Line Search Framework
+When stationary points cannot be determined analytically, numerical line search algorithms are used to approximate them. 
+
+**The general algorithm**
+- Starting from an initial point $x_{0}$, the method iterates until covergence using the update rule: $x_{k+1}\leftarrow x_{k} + \alpha_{k}p_{k}$
+- $\alpha_{k}$ is the step length, $p_{k}$ is the search direction
+- **Descent Direction**: A valid direction $p$ must satisfy $\nabla f(x)^T p < 0$, ensuring the function value decreases.
+
+## Gradient Descent (Steepest Descent)
+## Gradient Descent (Steepest Descent)
+This method chooses the direction in which the function decreases fastest.
+- **Direction**: The steepest descent direction is the negative gradient: $p=-\nabla f(x)$.
+- **Derivation ($\phi'$ Analysis)**:
+    - We analyze the "slice" of function $f$ along a direction $p$ using the scalar function $\phi(\alpha) = f(x + \alpha p)$.
+    - The rate of change of $f$ at $x$ along $p$ is the derivative $\phi'(0) = \nabla f(x)^\top p$.
+    - By the Cauchy-Schwarz inequality, $\nabla f(x)^\top p \ge - \|\nabla f(x)\| \|p\|$.
+    - Consequently, choosing $p = -\nabla f(x)$ attains this lower bound, yielding the steepest possible descent.
+- **Limitations**: Gradient Descent often zigzags or overshoots the [[Minimizers|minimizer]], especially with fixed step lengths.
+
+### Momentum Methods
+To mitigate zigzagging and improve convergence speed, momentum methods recycle information from previous iterations. 
+#### Polyak's Heavy-ball Method
+This method adds a "momentum" term based on the previous step.
+$$
+y_{k} = x_{k} + \beta_{k}(x_{k}-x_{k-1})
+$$
+$$
+x_{k+1} = y_{k} - \alpha_{k}\nabla f(x_{k})
+$$
+This takes into account the amount of movement the previous step had, and in which direction, scaled using $\beta$. If the current slope tells us to rapidly turn around, it will do more slowly as the old velocity is still going in the other direction. 
+
+#### Nesterov's Accelerated Gradient Descent (NAG)
+Just like Polyak's method, this adds the momentum or 'old velocity' of the previous step.
+$$
+y_{k} = x_{k} + \beta_{k}(x_{k}-x_{k-1})
+$$
+$$
+x_{k+1} = y_{k} - \alpha_{k}\nabla f(y_{k})
+$$
+A crucial difference is in the calculation of $x_{k+1}$. Instead of calculating the gradient of $f(x_{k})$, $f(y_{k})$ is used. Thus, it calculates and uses the gradient at that future position where it would end up by solely taking the momentum. 
+In places where it is rapidly falling down a hill, where at the bottom the global minimum is located, and right after that another (smaller) hill, it does not add the momentum downwards and the gradient downwards together, making it overshoot. For the NAG, it first applies the momentum, and then sees "OH! It was about to overshoot on this smaller hill, let's turn back!" and applies the new gradient back towards the global minimum. 
+
+### Convergence Analysis
+The efficiency of these methods is analyzed using [[10_Concepts/Taylor's Theorem|Taylor's Theorem]] and the condition number $\kappa = \frac{L}{\mu}$.
+- $\mu$ is the minimum eigenvalue and $L$ is the maximum eigenvalue of the [[Hessian Matrix|Hessian]] $\nabla^2f(x)$. 
+- A large $\kappa$ implies the function is hard to minimize numerically. 
+
+
+### Stochastic Gradient Descent (SGD)
+In machine learning problems, among others, the objective function is a sum of $m$ terms, making it computationally expensive to calculate the full gradient when $m$ is large. 
+
+To minimize $f(x)=\frac{1}{m}\sum_{j=1}^m f_{j}(x)$:
+- $x_{k+1}=x_{k}-\alpha_{k}\frac{1}{|\mathcal{B}_{k}|}\sum_{j\in\mathcal{B}_{k}}\nabla f_{j}(x_{k})$
+- $\mathcal{B}_k \subseteq \{1, ..., m\}$
+
+To ensure convergence and dampen noise, step lengths $\alpha_{k}$ must decay such that they satisfy the [[10_Concepts/Robbins-Monro conditions|Robbins-Monro conditions]]:
+$$\sum_{k=1}^{\infty} \alpha_k = \infty \quad \text{and} \quad \sum_{k=1}^{\infty} \alpha_k^2 < \infty$$
+
+#### Stochastic Optimization
+Using gradient statistics, the noisy gradients calculated from mini-batches can be made more stable. The core mechanism for this is the Exponentially Weighted Moving Average.
+
+##### EWMA (Exponentially Weighted Moving Average)
+EWMA allows us to estimate the statistical properties (mean and variance) of the gradient without storing the entire history of previous steps.
+- **Formula**: $z_{k} = \beta z_{k-1} + (1-\beta)y_{k}$
+  Where $z_k$ is the running average, $y_k$ is the new observation (e.g., the current gradient), and $\beta \in [0, 1)$ is the decay rate.
+- **Efficiency**: This provides a running average while only requiring one extra value ($z_{k-1}$) to be stored per parameter.
+- **Bias Correction**: Since $z_0$ is initialized to 0, the average is biased towards zero during the initial steps. This is corrected by scaling the estimate: $\hat{z}_{k} = \frac{z_{k}}{1 - \beta^k}$
+EWMA is the building block for sophisticated optimizers that utilize the "moments" of the gradient:
+##### Momentum
+This method applies EWMA to the gradient vector itself ($g_k$) to estimate the first moment (mean).
+- **Estimate Formula**: $m_{k} = \beta_{1}m_{k-1} + (1-\beta_{1})g_{k}$
+  Here, $m_k$ represents the accumulated direction of the gradient.
+- **Parameter Update**: $x_{k+1} = x_k - \alpha m_k$
+- **Mechanism**: By averaging the gradients over time, high-frequency noise caused by random mini-batch selection cancels out, while the consistent direction of the gradient accumulates. This acts as a low-pass filter, smoothing the optimization path and preventing the "zigzag" effect common in stochastic settings.
+##### RMSProp
+This method applies EWMA to the element-wise square of the gradient ($g_k \circ g_k$) to estimate the second moment (uncentered variance).
+- **Estimate Formula**: $v_{k} = \beta_{2}v_{k-1} + (1-\beta_{2})(g_{k} \circ g_{k})$
+  Here, $v_k$ represents the magnitude (variance) of the gradients for each parameter.
+- **Parameter Update**: $x_{k+1} = x_k - \frac{\alpha}{\sqrt{v_k} + \epsilon} g_k$
+- **Mechanism**: This estimate is used to normalize the step size:
+    - If the variance $v_k$ is **high** (steep gradients/high uncertainty), the term $\frac{1}{\sqrt{v_k}}$ scales the step down to prevent instability.
+    - If the variance $v_k$ is **low** (flat regions), the step size increases to accelerate progress.
+
+##### ADAM (Adaptive Moment Estimation)
+Adam is the modern default for stochastic minimization. It adapts the learning rate for each parameter based on estimates of the first and second moments of the gradients. It combines RMSprop and Momentum.
+
+**Algorithm**
+- **Initialize**: Step length $\alpha$, decay rates $\beta_1, \beta_2 \in [0, 1)$, $\epsilon > 0$, $x_0$, and moments $m_0 = 0, v_0 = 0$.
+- **Iterate:**
+	- Select mini-batch $\mathcal{B}_{k}$, and compute gradient $g_{k}$.
+	- Update First Moment (estimate of true gradient): $m_{k} \leftarrow \beta_{1}m_{k-1}+(1-\beta_{1})g_{k}$
+	- Update Second Moment (estimate of gradient variance): $v_k \leftarrow \beta_2 v_{k-1} + (1-\beta_2) (g_k \circ g_k)$
+	- Bias Correction: $\hat{m}_k \leftarrow m_k / (1 - \beta_1^k)$ and $\hat{v}_k \leftarrow v_k / (1 - \beta_2^k)$
+	- Update Parameters: $x_k \leftarrow x_{k-1} - \alpha [\text{Diag}(\hat{v}_k)^{1/2} + \epsilon I]^{-1} \hat{m}_k$
+
+# Week 3: Advanced Line Search and Convergence
+This week is about methods that utilize the curvature of the function (second-order information) to find better search directions. Additionally, this week includes formalization on finding the optimal step length numerically, and measuring the speed of convergence. 
+
+## Newton's Method
+Gradient Descent finds the tangent plane at the current location, and takes a step in that direction (downwards). This is First-order optimization. 
+Newton's method is an example of second-order optimization. Instead of fitting a linear function (the tangent) to the current location, it fits a quadratic function (bowl shaped) to the current location by looking at the surrounding curvature of the function. Then it can jump down to the minimum of this quadratic function. If the objective function is truly quadratic, then this method finds the minimum in exactly one step. 
+
+**The Quadratic Model** We minimize the model function $m_{k}(p)$, which is the second-order Taylor-Expansion of $f$ around $x_{k}$:
+$$
+m_{k}(p) \approx f(x_{k})+\nabla f(x_{k})^T p+\frac{1}{2} p^T \nabla^2 f(x_{k})p
+$$
+Here, $\nabla^2 f(x_k)$ is the Hessian matrix (the matrix of second partial derivatives).
+
+**The Algorithm** To find the search direction $p_{k}$, we minimize $m_{k}(p)$ by setting its derivative to zero. This leads to the linear system $\nabla^2 f(x_k) p_k = - \nabla f(x_k)$.
+1. Choose starting point $x_{0}\in \mathbb{R}^n$. Set $k=0$.
+2. While not converged:
+	1. Compute Hessian and Gradient
+	2. Solve for search direction $p_k = -[\nabla^2 f(x_k)]^{-1} \nabla f(x_k)$
+	3. Update position: $x_{k+1} \leftarrow x_{k}+p_{k}$ (in practice: $x_{k+1} \leftarrow x_{k}+\alpha_{k}p_{k}$, with step length $\alpha_{k}$)
+	4. $k\leftarrow k+1$
+
+Issues with this method are:
+- Computation: Computing and inverting the Hessian is computationally expensive ($O(n^3)$ ([[10_Concepts/Complexity|Big-Oh]]))
+- [[10_Concepts/Convexity|Non-Convexity]]: If the Hessian is not positive definite, the direction $p_{k}$ might not be a descent direction (it could point toward a saddle point or maximum)
+
+### Quasi-Newton Methods (BFGS)
+Quasi-Newton methods aim to gain the cheap computation of gradient descent, while also having fast divergence. These methods essentially combine the two by approximating the Hessian Matrix (or its inverse) as it moves through the optimization landscape. Using the information of the gradient, and change in position, the curvature can be learned.
+
+**The Secant Equation**Let $B_k$ be the approximation of the Hessian at step $k$. It must satisfy the Secant Equation based on Taylor's theorem:
+$$B_k [x_k - x_{k-1}] = \nabla f(x_k) - \nabla f(x_{k-1})$$
+**Notation**
+- Displacement: $s_{k-1} = x_k - x_{k-1}$
+- Change in Gradient: $y_{k-1} = \nabla f(x_k) - \nabla f(x_{k-1})$
+
+#### The BFGS Update
+The Broyden-Fletcher-Goldfarb-Shanno (BFGS) algorithm is the most popular Quasi-Newton method. It updates the _inverse_ Hessian approximation, denoted as $B_k^{-1}$ (sometimes denoted $H_k$), directly.
+
+The update formula to generate $B_k^{-1}$ from $B_{k-1}^{-1}$ is:
+$$B_k^{-1} = \left(I - \frac{s_{k-1}y_{k-1}^\top}{y_{k-1}^\top s_{k-1}}\right) B_{k-1}^{-1} \left(I - \frac{y_{k-1}s_{k-1}^\top}{y_{k-1}^\top s_{k-1}}\right) + \frac{s_{k-1}s_{k-1}^\top}{y_{k-1}^\top s_{k-1}}$$
+**The Algorithm**
+1. **Initialize:** $x_0 \in \mathbb{R}^n$ and an initial inverse Hessian approximation $B_0^{-1}$ (usually the Identity matrix $I$).
+2. **While not converged:**
+    - Compute search direction: $p_k = -B_k^{-1} \nabla f(x_k)$
+    - Perform line search to find step length $\alpha_k$ and update: $x_{k+1} = x_k + \alpha_k p_k$
+    - Compute differences: $s_k = x_{k+1} - x_k$ and $y_k = \nabla f(x_{k+1}) - \nabla f(x_k)$
+    - Update the inverse Hessian approximation $B_{k+1}^{-1}$ using the BFGS formula above.
+    - $k \leftarrow k+1$.
+
+## Optimal Step Length
+Most of the time, step lengths are fixed or decaying. However, the most effective methods find the optimal step length $\alpha$ that minimizes the function along the search direction. This is a 1D optimization problem: 
+$$
+\min_{\alpha>0}\phi(\alpha) \quad \text{where} \quad \phi(\alpha)=f(x_{k}+\alpha p_{k})
+$$
+### The bisection method
+This method finds a [[Gradients#Stationary Points|stationary point]] of $\phi(\alpha)$ by iteratively narrowing down an interval $[L,U]$ that contains the minimum. 
+Prerequisites:
+- $p$ must be a descent direction, implying $\phi'(0)<0$
+- We must identify an interval $[L, U]$ such that the slope at $L$ is negative ($\phi'(L) < 0$) and the slope at $U$ is positive ($\phi'(U) > 0$). This guarantees a local minimizer exists between them.
+
+**Algorithm** (Similar to Binary Search)
+- **Initialize:** Interval $[L, U]$ and tolerance $\delta > 0$.
+- **While** $(U - L) > \delta$:
+    - Calculate midpoint: $M = \frac{1}{2}(L + U)$.
+    - Calculate the derivative (slope) at the midpoint: $\phi'(M) = \nabla f(x_k + M p_k)^\top p_k$.
+    - Case 1: If $\phi'(M) < 0$, the function is still sloping down. The minimum is to the right of $M$. Update: $L \leftarrow M$
+    - Case 2: If $\phi'(M) > 0$, the function is sloping up. The minimum is to the left of $M$. Update:  $U \leftarrow M$
+    - Case 3: If $\phi'(M) = 0$, $M$ is the stationary point. Update:  $L \leftarrow M, \quad U \leftarrow M$
+- **Return:** $\frac{1}{2}(L + U)$ as the approximate optimal step length.
+
+## Rates of Convergence
+We can compare optimization algorithms by how fast the error $||x_{k}-x^*||$ approaches zero as $k\rightarrow \infty$. 
+
+**Linear Convergence** The distance to the solution decreases by a constant factor in every iteration.
+- **Definition:** There exists $r \in (0, 1)$ such that for large $k$:
+$$\frac{||x_{k+1} - x^*||}{||x_k - x^*||} \le r$$
+- **Associated Method:** Gradient Descent generally converges linearly. It is reliable but relatively slow (digits of accuracy accumulate at a constant rate).
+
+**Superlinear Convergence** The convergence is faster than linear; the ratio of errors approaches zero. 
+- **Definition:**
+$$\lim_{k \to \infty} \frac{||x_{k+1} - x^*||}{||x_k - x^*||} = 0$$
+- **Associated Method:** Quasi-Newton methods (like BFGS) generally converge superlinearly.
+
+**Quadratic Convergence**  The error is roughly squared at every step. This means the number of correct digits in the solution doubles with every iteration (e.g., $10^{-2} \to 10^{-4} \to 10^{-8}$).
+- **Definition**: There exists $M > 0$ such that for large $k$:
+$$\frac{||x_{k+1} - x^*||}{||x_k - x^*||^2} \le M$$
+- **Associated Method:** Newton's Method generally converges quadratically (provided $x_0$ is close enough to the solution).
+
+# Week 4: Derivative-Free Optimization
