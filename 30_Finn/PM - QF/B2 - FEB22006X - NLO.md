@@ -1,5 +1,3 @@
-# Non-Linear Optimization
-
 # Course Information
 
 ### Study Goals
@@ -353,3 +351,118 @@ The method iteratively improves the worst point in the simplex.
 7. **Shrink:**
     - If all else fails (Reflection and Contraction did not improve the worst point), the simplex is likely too large around a minimum.
     - **Action:** Shrink the entire simplex towards the best point $x_1$. Replace all $x_j$ with $\frac{1}{2}(x_j + x_1)$.
+
+# Week 5: Constrained Optimization
+## Constraints
+A **constraint** is a logical predicate or condition defined on a set of variables $x \in \mathbb{R}^n$ that restricts the domain of valid values.
+Formally, a system of constraints defines a subset $\mathcal{F} \subseteq \mathbb{R}^n$, known as the **Feasible Set** (or Feasible Region).
+The set $\mathcal{F}$ is defined as:
+$$\mathcal{F} = \{ x \in \mathbb{R}^n \mid c_i(x) = 0, \ \forall i \in \mathcal{E} \quad \text{and} \quad c_j(x) \ge 0, \ \forall j \in \mathcal{I} \}$$
+Where:
+- $c(x)$ are the constraint functions mapping $\mathbb{R}^n \to \mathbb{R}$.
+- $\mathcal{E}$ is the index set for **Equality Constraints**.
+- $\mathcal{I}$ is the index set for **Inequality Constraints**.
+If $\mathcal{F}$ is empty ($\mathcal{F} = \emptyset$), the system is **inconsistent** (or infeasible).
+
+### Equality Constraints
+$$c(x) = 0$$
+- **Definition:** A restriction that forces the variables to satisfy an exact equation.
+- **Geometry:** In $n$-dimensions, a single equality constraint typically reduces the solution space to an $(n-1)$-dimensional surface (a "manifold").
+    - In 2D, this is a curve (line, circle, etc.).
+    - In 3D, this is a surface (plane, sphere, etc.).
+### Inequality Constraint
+$$c(x) \ge 0$$
+- **Definition:** A restriction that bounds the variables to a specific range or side of a boundary.
+- **Geometry:** In $n$-dimensions, a single inequality constraint defines a **region** or **volume** (a "half-space" or interior of a shape).
+
+## Constrained Optimization
+### Problem Definition
+We focus on minimizing a function subject to specific restrictions.
+
+We aim to find the [[Optimal Values#Infinum|infinum]] of $f(x)$ subject to the two types of constraints:
+$$\begin{aligned} \min & \quad f(x) \\ \text{subject to} & \quad c_i(x) = 0, \quad \forall i \in \mathcal{E} \quad \text{(Equality constraints)} \\ & \quad c_i(x) \geq 0, \quad \forall i \in \mathcal{I} \quad \text{(Inequality constraints)} \end{aligned}$$
+In constrained optimization, a [[Minimizers#Global Minimizer|global minimizer]] is formally referred to as an **optimal solution**, and a local minimizer is a **locally optimal solution**.
+
+### Necessary Conditions
+To find a minimizer, we analyze the relationship between the gradient of the objective function $\nabla f$ and the gradients of the constraints $\nabla c_i$.
+
+#### Equality Constraints ($c_i(x)=0$)
+If we are at a feasible point $x$, we can only move in directions $s$ that keep us on the constraint curve (tangent directions).
+- **Feasible Direction:** To stay feasible (to first order), the movement $s$ must satisfy $\nabla c_i(x)^T s = 0$.
+- **Descent Direction:** To decrease the function value, the movement $s$ must satisfy $\nabla f(x)^T s < 0$.
+- **Optimality:** If there is no direction $s$ that is both feasible and a descent direction, then $\nabla f(x)$ must be parallel to the constraint gradient $\nabla c_i(x)$. This implies $\nabla f(x) = \lambda \nabla c_i(x)$ for some scalar $\lambda$.
+
+#### Inequality Constraints ($c_i(x) \geq 0$)
+Inequality constraints add complexity because they can be either **active** (limiting the solution) or **inactive**.
+- **Inactive Case ($c_i(x) > 0$):** The constraint is not currently restricting the solution. Locally, the problem behaves as if it were unconstrained. Thus, $\nabla f(x) = 0$ .
+- **Active Case ($c_i(x) = 0$):** The point is on the boundary. We cannot move "out" of the feasible region.
+    - For $x$ to be a minimizer, the gradient $\nabla f$ must point "inward" toward the forbidden region (otherwise, we could move into the feasible region and decrease $f$).
+    - Mathematically, $\nabla f(x) = \lambda_i \nabla c_i(x)$ where **$\lambda_i \geq 0$**.
+#### Complementarity
+To handle both active and inactive cases simultaneously, we introduce the complementarity condition:
+$$\lambda_i c_i(x) = 0$$
+This ensures that either the constraint is active ($c_i(x)=0$) or the multiplier is zero ($\lambda_i=0$) .
+
+### Lagrangian & The Karush-Kuhn-Tucker (KKT) Conditions
+To formalize the search for optimal points, we combine the objective function and the constraints into a single "helper" function called the **Lagrangian**.
+#### Definition: The Lagrangian Function
+Although not explicitly defined as a standalone formula in the slide text, the theorem implies the construction of a function $\mathcal{L}$ that subtracts the weighted constraints from the objective:
+$$\mathcal{L}(x, \lambda) = f(x) - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i c_i(x)$$
+The variables $\lambda_i$ are called Lagrange multipliers. Finding a minimizer for the constrained problem is related to finding a stationary point of this unconstrained Lagrangian function.
+#### The Karush-Kuhn-Tucker (KKT) Conditions
+The KKT conditions act as the necessary "first derivative test" for constrained optimization.
+**Theorem:** If $x^*$ is a local minimizer and a constraint qualification holds, there exist Lagrange multipliers $\lambda_i^*$ such that the following four conditions are met 1:
+1. Stationarity: The gradient of the Lagrangian with respect to $x$ is zero.
+$$\nabla_x \mathcal{L}(x^*, \lambda^*) = \nabla f(x^*) - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i^* \nabla c_i(x^*) = 0$$
+(This is equivalently written in the slides as $\nabla f(x^) = \sum \lambda_i^* \nabla c_i(x^)$).
+2. Primal Feasibility: The point must satisfy the original physical constraints.
+$$c_i(x^*) = 0, \forall i \in \mathcal{E}; \quad c_i(x^*) \geq 0, \forall i \in \mathcal{I}$$
+
+3. Dual Feasibility: The multipliers for inequality constraints must be non-negative (ensuring the gradient points "inward").
+$$\lambda_i^* \geq 0, \quad \forall i \in \mathcal{I}$$
+4. Complementary Slackness: A constraint is either active ($c_i=0$) or its multiplier is zero ($\lambda_i=0$).
+$$\lambda_i^* c_i(x^*) = 0, \quad \forall i \in \mathcal{I}$$
+#### Constraint Qualification
+The KKT conditions are not automatically true for every minimizer. To rely on KKT, one of the following Constraint Qualifications must hold.
+
+##### Slater's Condition (for convex problems)
+**Problem Definition**
+- Objective $f$ is convex
+- Equality constraints are affine ($a_i^Tx + b_i = 0$).
+- Inequality constraints are concave ($-c_{i}$ is convex).
+**The Condition**
+Slater's condition is satisfied if there exists a point $x^{*}$ such that:
+- The equality constraints are satisfied: $c_{i}(x^{*})=0$ for all $i\in\mathcal{E}$.
+- The inequality constraints are strictly satisfied: $c_{i}(x^{*})>0$ for all $i\in\mathcal{I}$.
+**Implication**
+If Slater's conditions holds for a convex problem, KKT conditions are necessary and sufficient for global optimality. 
+
+##### Linear Independence Constraint Qualification (LICQ)
+This is a more general condition for non-convex problems:
+**Definition** LICQ holds at $x^*$ if the gradients of all **active** constraints $\{\nabla c_i(x^*) : i \in \mathcal{E} \text{ or } (i \in \mathcal{I} \text{ and } c_i(x^*)=0)\}$ are linearly independent .
+**Implication** If LICQ holds at a local minimizer, the KKT conditions must hold.
+
+### Finding Global Minimizers
+1. Find KKT points: solve the system of KKT equations to find candidate points $(x,\lambda)$
+2. Check slater's condition. If true, then you have found the optimal solution, of not proceed to next step.
+3. Check LICQ. You must also find feasible points where LICQ fails, as these are also candidates. 
+4. Verification (Weierstrass):
+	1. Does Weierstrass' theorem apply? If yes, compare the $f(x)$ values of all KKT points and non-LICQ points. The best one is the global optimum. 
+	2. If it does not apply, use case-specific arguments (limits, geometry) to prove optimality. 
+
+### Second-Order Conditions
+If the problem is non-convex, KKT points could be maximizers or saddle points. We check the Hessian of the Lagrangian to be sure. 
+
+**The Lagrangian Hessian:**
+$$\nabla^2 \mathcal{L}(x^*, \lambda^*) = \nabla^2 f(x^*) - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i^* \nabla^2 c_i(x^*)$$
+- **Necessary Condition:** For a local minimizer, the Lagrangian Hessian must be Positive Semi-Definite ($w^T \nabla^2 \mathcal{L} w \geq 0$) for all directions $w$ tangent to the active constraints .
+- **Sufficient Condition:** If the Lagrangian Hessian is Positive Definite ($w^T \nabla^2 \mathcal{L} w > 0$) on the tangent subspace of active constraints (and $\lambda_i^* > 0$), then $x^*$ is a **strict local minimizer** .
+
+### Lagrange Multipliers
+The multipliers $\lambda_i^*$ are not just abstract variables; they have a practical economic interpretation.
+- They measure the **sensitivity** of the optimal objective value to changes in the constraints.
+- If we relax a constraint $c_j(x)=0$ to $c_j(x)=\epsilon$, the change in the optimal objective value is approximately:
+$$f(x^*(\epsilon)) - f(x^*) \approx \lambda_j^* \epsilon$$
+- In other words, $\lambda_j^*$ tells you how much the "cost" $f(x)$ decreases if the constraint is loosened.
+
+# Week 6: Convex Optimization
