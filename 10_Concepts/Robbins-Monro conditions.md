@@ -7,6 +7,7 @@ created: 2025-11-26 11:51
 # Robbins-Monro conditions
 
 ## Summary
+$$\sum_{k=1}^{\infty} \alpha_k = \infty \quad \text{and} \quad \sum_{k=1}^{\infty} \alpha_k^2 < \infty$$
 
 ## Details
 

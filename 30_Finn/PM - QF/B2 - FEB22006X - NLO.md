@@ -101,47 +101,14 @@ You now have a list of Local Minimizers. To prove one is **Global**, you must ru
 
 # Week 2: Gradient Descent
 ## General Line Search Framework
-When stationary points cannot be determined analytically, numerical line search algorithms are used to approximate them. 
 
-**The general algorithm**
-- Starting from an initial point $x_{0}$, the method iterates until covergence using the update rule: $x_{k+1}\leftarrow x_{k} + \alpha_{k}p_{k}$
-- $\alpha_{k}$ is the step length, $p_{k}$ is the search direction
-- **Descent Direction**: A valid direction $p$ must satisfy $\nabla f(x)^T p < 0$, ensuring the function value decreases.
+![[10_Concepts/Line Search Methods#Summary]]
 
 ## Gradient Descent (Steepest Descent)
-## Gradient Descent (Steepest Descent)
-This method chooses the direction in which the function decreases fastest.
-- **Direction**: The steepest descent direction is the negative gradient: $p=-\nabla f(x)$.
-- **Derivation ($\phi'$ Analysis)**:
-    - We analyze the "slice" of function $f$ along a direction $p$ using the scalar function $\phi(\alpha) = f(x + \alpha p)$.
-    - The rate of change of $f$ at $x$ along $p$ is the derivative $\phi'(0) = \nabla f(x)^\top p$.
-    - By the Cauchy-Schwarz inequality, $\nabla f(x)^\top p \ge - \|\nabla f(x)\| \|p\|$.
-    - Consequently, choosing $p = -\nabla f(x)$ attains this lower bound, yielding the steepest possible descent.
-- **Limitations**: Gradient Descent often zigzags or overshoots the [[Minimizers|minimizer]], especially with fixed step lengths.
+![[10_Concepts/Gradient Descent#Gradient Descent]]
 
 ### Momentum Methods
-To mitigate zigzagging and improve convergence speed, momentum methods recycle information from previous iterations. 
-#### Polyak's Heavy-ball Method
-This method adds a "momentum" term based on the previous step.
-$$
-y_{k} = x_{k} + \beta_{k}(x_{k}-x_{k-1})
-$$
-$$
-x_{k+1} = y_{k} - \alpha_{k}\nabla f(x_{k})
-$$
-This takes into account the amount of movement the previous step had, and in which direction, scaled using $\beta$. If the current slope tells us to rapidly turn around, it will do more slowly as the old velocity is still going in the other direction. 
-
-#### Nesterov's Accelerated Gradient Descent (NAG)
-Just like Polyak's method, this adds the momentum or 'old velocity' of the previous step.
-$$
-y_{k} = x_{k} + \beta_{k}(x_{k}-x_{k-1})
-$$
-$$
-x_{k+1} = y_{k} - \alpha_{k}\nabla f(y_{k})
-$$
-A crucial difference is in the calculation of $x_{k+1}$. Instead of calculating the gradient of $f(x_{k})$, $f(y_{k})$ is used. Thus, it calculates and uses the gradient at that future position where it would end up by solely taking the momentum. 
-In places where it is rapidly falling down a hill, where at the bottom the global minimum is located, and right after that another (smaller) hill, it does not add the momentum downwards and the gradient downwards together, making it overshoot. For the NAG, it first applies the momentum, and then sees "OH! It was about to overshoot on this smaller hill, let's turn back!" and applies the new gradient back towards the global minimum. 
-
+![[10_Concepts/Momentum Methods#Momentum Methods]]
 ### Convergence Analysis
 The efficiency of these methods is analyzed using [[10_Concepts/Taylor's Theorem|Taylor's Theorem]] and the condition number $\kappa = \frac{L}{\mu}$.
 - $\mu$ is the minimum eigenvalue and $L$ is the maximum eigenvalue of the [[Hessian Matrix|Hessian]] $\nabla^2f(x)$. 
@@ -149,121 +116,15 @@ The efficiency of these methods is analyzed using [[10_Concepts/Taylor's Theorem
 
 
 ### Stochastic Gradient Descent (SGD)
-In machine learning problems, among others, the objective function is a sum of $m$ terms, making it computationally expensive to calculate the full gradient when $m$ is large. 
-
-To minimize $f(x)=\frac{1}{m}\sum_{j=1}^m f_{j}(x)$:
-- $x_{k+1}=x_{k}-\alpha_{k}\frac{1}{|\mathcal{B}_{k}|}\sum_{j\in\mathcal{B}_{k}}\nabla f_{j}(x_{k})$
-- $\mathcal{B}_k \subseteq \{1, ..., m\}$
-
-To ensure convergence and dampen noise, step lengths $\alpha_{k}$ must decay such that they satisfy the [[10_Concepts/Robbins-Monro conditions|Robbins-Monro conditions]]:
-$$\sum_{k=1}^{\infty} \alpha_k = \infty \quad \text{and} \quad \sum_{k=1}^{\infty} \alpha_k^2 < \infty$$
-
-#### Stochastic Optimization
-Using gradient statistics, the noisy gradients calculated from mini-batches can be made more stable. The core mechanism for this is the Exponentially Weighted Moving Average.
-
-##### EWMA (Exponentially Weighted Moving Average)
-EWMA allows us to estimate the statistical properties (mean and variance) of the gradient without storing the entire history of previous steps.
-- **Formula**: $z_{k} = \beta z_{k-1} + (1-\beta)y_{k}$
-  Where $z_k$ is the running average, $y_k$ is the new observation (e.g., the current gradient), and $\beta \in [0, 1)$ is the decay rate.
-- **Efficiency**: This provides a running average while only requiring one extra value ($z_{k-1}$) to be stored per parameter.
-- **Bias Correction**: Since $z_0$ is initialized to 0, the average is biased towards zero during the initial steps. This is corrected by scaling the estimate: $\hat{z}_{k} = \frac{z_{k}}{1 - \beta^k}$
-EWMA is the building block for sophisticated optimizers that utilize the "moments" of the gradient:
-##### Momentum
-This method applies EWMA to the gradient vector itself ($g_k$) to estimate the first moment (mean).
-- **Estimate Formula**: $m_{k} = \beta_{1}m_{k-1} + (1-\beta_{1})g_{k}$
-  Here, $m_k$ represents the accumulated direction of the gradient.
-- **Parameter Update**: $x_{k+1} = x_k - \alpha m_k$
-- **Mechanism**: By averaging the gradients over time, high-frequency noise caused by random mini-batch selection cancels out, while the consistent direction of the gradient accumulates. This acts as a low-pass filter, smoothing the optimization path and preventing the "zigzag" effect common in stochastic settings.
-##### RMSProp
-This method applies EWMA to the element-wise square of the gradient ($g_k \circ g_k$) to estimate the second moment (uncentered variance).
-- **Estimate Formula**: $v_{k} = \beta_{2}v_{k-1} + (1-\beta_{2})(g_{k} \circ g_{k})$
-  Here, $v_k$ represents the magnitude (variance) of the gradients for each parameter.
-- **Parameter Update**: $x_{k+1} = x_k - \frac{\alpha}{\sqrt{v_k} + \epsilon} g_k$
-- **Mechanism**: This estimate is used to normalize the step size:
-    - If the variance $v_k$ is **high** (steep gradients/high uncertainty), the term $\frac{1}{\sqrt{v_k}}$ scales the step down to prevent instability.
-    - If the variance $v_k$ is **low** (flat regions), the step size increases to accelerate progress.
-
-##### ADAM (Adaptive Moment Estimation)
-Adam is the modern default for stochastic minimization. It adapts the learning rate for each parameter based on estimates of the first and second moments of the gradients. It combines RMSprop and Momentum.
-
-**Algorithm**
-- **Initialize**: Step length $\alpha$, decay rates $\beta_1, \beta_2 \in [0, 1)$, $\epsilon > 0$, $x_0$, and moments $m_0 = 0, v_0 = 0$.
-- **Iterate:**
-	- Select mini-batch $\mathcal{B}_{k}$, and compute gradient $g_{k}$.
-	- Update First Moment (estimate of true gradient): $m_{k} \leftarrow \beta_{1}m_{k-1}+(1-\beta_{1})g_{k}$
-	- Update Second Moment (estimate of gradient variance): $v_k \leftarrow \beta_2 v_{k-1} + (1-\beta_2) (g_k \circ g_k)$
-	- Bias Correction: $\hat{m}_k \leftarrow m_k / (1 - \beta_1^k)$ and $\hat{v}_k \leftarrow v_k / (1 - \beta_2^k)$
-	- Update Parameters: $x_k \leftarrow x_{k-1} - \alpha [\text{Diag}(\hat{v}_k)^{1/2} + \epsilon I]^{-1} \hat{m}_k$
-
+![[10_Concepts/Gradient Descent#Stochastic Gradient Descent]]
 # Week 3: Advanced Line Search and Convergence
 This week is about methods that utilize the curvature of the function (second-order information) to find better search directions. Additionally, this week includes formalization on finding the optimal step length numerically, and measuring the speed of convergence. 
 
 ## Newton's Method
-Gradient Descent finds the tangent plane at the current location, and takes a step in that direction (downwards). This is First-order optimization. 
-Newton's method is an example of second-order optimization. Instead of fitting a linear function (the tangent) to the current location, it fits a quadratic function (bowl shaped) to the current location by looking at the surrounding curvature of the function. Then it can jump down to the minimum of this quadratic function. If the objective function is truly quadratic, then this method finds the minimum in exactly one step. 
-
-**The Quadratic Model** We minimize the model function $m_{k}(p)$, which is the second-order Taylor-Expansion of $f$ around $x_{k}$:
-$$
-m_{k}(p) \approx f(x_{k})+\nabla f(x_{k})^T p+\frac{1}{2} p^T \nabla^2 f(x_{k})p
-$$
-Here, $\nabla^2 f(x_k)$ is the Hessian matrix (the matrix of second partial derivatives).
-
-**The Algorithm** To find the search direction $p_{k}$, we minimize $m_{k}(p)$ by setting its derivative to zero. This leads to the linear system $\nabla^2 f(x_k) p_k = - \nabla f(x_k)$.
-1. Choose starting point $x_{0}\in \mathbb{R}^n$. Set $k=0$.
-2. While not converged:
-	1. Compute Hessian and Gradient
-	2. Solve for search direction $p_k = -[\nabla^2 f(x_k)]^{-1} \nabla f(x_k)$
-	3. Update position: $x_{k+1} \leftarrow x_{k}+p_{k}$ (in practice: $x_{k+1} \leftarrow x_{k}+\alpha_{k}p_{k}$, with step length $\alpha_{k}$)
-	4. $k\leftarrow k+1$
-
-Issues with this method are:
-- Computation: Computing and inverting the Hessian is computationally expensive ($O(n^3)$ ([[10_Concepts/Complexity|Big-Oh]]))
-- [[10_Concepts/Convexity|Non-Convexity]]: If the Hessian is not positive definite, the direction $p_{k}$ might not be a descent direction (it could point toward a saddle point or maximum)
-
-### Quasi-Newton Methods (BFGS)
-Quasi-Newton methods aim to gain the cheap computation of gradient descent, while also having fast divergence. These methods essentially combine the two by approximating the Hessian Matrix (or its inverse) as it moves through the optimization landscape. Using the information of the gradient, and change in position, the curvature can be learned.
-
-**The Secant Equation**Let $B_k$ be the approximation of the Hessian at step $k$. It must satisfy the Secant Equation based on Taylor's theorem:
-$$B_k [x_k - x_{k-1}] = \nabla f(x_k) - \nabla f(x_{k-1})$$
-**Notation**
-- Displacement: $s_{k-1} = x_k - x_{k-1}$
-- Change in Gradient: $y_{k-1} = \nabla f(x_k) - \nabla f(x_{k-1})$
-
-#### The BFGS Update
-The Broyden-Fletcher-Goldfarb-Shanno (BFGS) algorithm is the most popular Quasi-Newton method. It updates the _inverse_ Hessian approximation, denoted as $B_k^{-1}$ (sometimes denoted $H_k$), directly.
-
-The update formula to generate $B_k^{-1}$ from $B_{k-1}^{-1}$ is:
-$$B_k^{-1} = \left(I - \frac{s_{k-1}y_{k-1}^\top}{y_{k-1}^\top s_{k-1}}\right) B_{k-1}^{-1} \left(I - \frac{y_{k-1}s_{k-1}^\top}{y_{k-1}^\top s_{k-1}}\right) + \frac{s_{k-1}s_{k-1}^\top}{y_{k-1}^\top s_{k-1}}$$
-**The Algorithm**
-1. **Initialize:** $x_0 \in \mathbb{R}^n$ and an initial inverse Hessian approximation $B_0^{-1}$ (usually the Identity matrix $I$).
-2. **While not converged:**
-    - Compute search direction: $p_k = -B_k^{-1} \nabla f(x_k)$
-    - Perform line search to find step length $\alpha_k$ and update: $x_{k+1} = x_k + \alpha_k p_k$
-    - Compute differences: $s_k = x_{k+1} - x_k$ and $y_k = \nabla f(x_{k+1}) - \nabla f(x_k)$
-    - Update the inverse Hessian approximation $B_{k+1}^{-1}$ using the BFGS formula above.
-    - $k \leftarrow k+1$.
+![[10_Concepts/Newton's Method#Newton's Method]]
 
 ## Optimal Step Length
-Most of the time, step lengths are fixed or decaying. However, the most effective methods find the optimal step length $\alpha$ that minimizes the function along the search direction. This is a 1D optimization problem: 
-$$
-\min_{\alpha>0}\phi(\alpha) \quad \text{where} \quad \phi(\alpha)=f(x_{k}+\alpha p_{k})
-$$
-### The bisection method
-This method finds a [[Gradients#Stationary Points|stationary point]] of $\phi(\alpha)$ by iteratively narrowing down an interval $[L,U]$ that contains the minimum. 
-Prerequisites:
-- $p$ must be a descent direction, implying $\phi'(0)<0$
-- We must identify an interval $[L, U]$ such that the slope at $L$ is negative ($\phi'(L) < 0$) and the slope at $U$ is positive ($\phi'(U) > 0$). This guarantees a local minimizer exists between them.
-
-**Algorithm** (Similar to Binary Search)
-- **Initialize:** Interval $[L, U]$ and tolerance $\delta > 0$.
-- **While** $(U - L) > \delta$:
-    - Calculate midpoint: $M = \frac{1}{2}(L + U)$.
-    - Calculate the derivative (slope) at the midpoint: $\phi'(M) = \nabla f(x_k + M p_k)^\top p_k$.
-    - Case 1: If $\phi'(M) < 0$, the function is still sloping down. The minimum is to the right of $M$. Update: $L \leftarrow M$
-    - Case 2: If $\phi'(M) > 0$, the function is sloping up. The minimum is to the left of $M$. Update:  $U \leftarrow M$
-    - Case 3: If $\phi'(M) = 0$, $M$ is the stationary point. Update:  $L \leftarrow M, \quad U \leftarrow M$
-- **Return:** $\frac{1}{2}(L + U)$ as the approximate optimal step length.
-
+![[10_Concepts/Optimal Step Lengths in Line Search#Optimal Step Length]]
 ## Rates of Convergence
 We can compare optimization algorithms by how fast the error $||x_{k}-x^*||$ approaches zero as $k\rightarrow \infty$. 
 
@@ -290,157 +151,33 @@ $$\frac{||x_{k+1} - x^*||}{||x_k - x^*||^2} \le M$$
 ## Numerical Line Search
 If the problem cannot be solved analytically using subgradients, we return to iterative line search methods
 ### Search Direction: Coordinate Descent
-Instead of calculating a specific descent direction $p_{k}$, using a gradient, this method cycles through the dimensions of the coordinates changing one value at a time to find the direction to move to find the minimum. 
-
-Imagine standing on a hill, and instead of looking where downhill is, you feel by moving left and right, and then choosing the direction that minimized your height. Then you move forward and backwards and minimize your height again. 
-
-**Algorithm**
-- Initialize starting point
-- Cycle through dimensions / directions
-- For each dimensions / direction $p_{k}$, perform a line search to find the optimal step length
-- Repeat until convergence
-
-Cycling through dimensions can be done:
-- $\texttt{cyclic}$: ($1 \dots n \quad \text{repeat}$);
-- $\texttt{back-and-forth}$: ($1 \dots n \dots 1 \quad \text{repeat}$);
+![[10_Concepts/Coordinate Descent Search#Coordinate Descent]]
 
 ### Step Length: The Golden Section Method
-The bisection method was used to find the optimal step size $\alpha$. Bisection  requires the derivative $\phi '(\alpha)$ to check if the slope is positive or negative. Without derivatives, we use the Golden Section Method.
-- **Prerequisites:** The function $\phi(\alpha)$ must be unimodal on the interval $[L, U]$ (it has one unique minimum).
-- **Intuition:** To narrow down the interval $[L, U]$ without derivatives, we need to evaluate the function at two internal points, $M$ and $T$. To ensure the interval shrinks by a constant efficient ratio every time regardless of which side holds the minimum, we place these points using the Golden Ratio $\varphi \approx 1.618$.
-- **The Algorithm:**
-    1. **Initialize:** Bounds $L < M < U$ such that the ratio of segments corresponds to the Golden Ratio (specifically $(M-L)/(U-M) \in \{ \varphi, 1/\varphi \}$).
-    2. **Loop** while $(U - L) > \epsilon$:
-        - Pick a test point $T$ in the larger sub-interval (between $L$ and $M$ or $M$ and $U$).
-        - **Compare** $\phi(T)$ and $\phi(M)$:
-            - If $\phi(T) < \phi(M)$: The minimum is in the new smaller region around $T$. $T$ becomes the new "middle" $M$, and the bounds are tightened.
-            - If $\phi(T) \ge \phi(M)$: The minimum is likely around $M$. The bounds are tightened to exclude $T$.
-    3. **Result:** The interval shrinks linearly by a factor of $1/\varphi \approx 0.618$ per iteration.
+![[10_Concepts/The Golden Section Method in Search#The Golden Section Method]]
 
 ## Heuristic Line Search
-### Nelder-Mead Simplex Method
-This method is a 'direct search' method that does not approximate gradients but rather evolves a geometric shape to find the minimum. 
-
-#### The Simplex
-A simplex is a generalization of a triangle to $n$-dimensions. It consists of $n+1$ vertices.
-- In 2D: A triangle (3 points).
-- In 3D: A tetrahedron (4 points).
-
-#### [The Algorithm](https://www.youtube.com/watch?v=j2gcuRVbwR0)
-The method iteratively improves the worst point in the simplex.
-**Preparation:**
-1. Initialize $n+1$ vertices.
-2. **Order** them such that $f(x_1) \le f(x_2) \le \dots \le f(x_{n+1})$.
-    - $x_1$: Best point.
-    - $x_{n+1}$: Worst pointt
-3. Compute the **Centroid** $\bar{x}$ of the _best_ $n$ points (excluding the worst)
-**Iteration Steps** The algorithm attempts to replace the worst point $x_{n+1}$ using the following logic:
-4. **Reflection ($r$):**
-    - Reflect the worst point through the centroid: $r = \bar{x} + (\bar{x} - x_{n+1})$.
-    - _Intuition:_ If the worst point is high up a hill, the minimum is likely on the opposite side of the average.
-    - _Decision:_ If $f(x_1) \le f(r) < f(x_n)$, accept $r$.
-5. **Expansion ($e$):**
-    - If the Reflection $r$ is the new **best** point ($f(r) < f(x_1)$), we have found a very good direction. Go further.
-    - Compute $e = \bar{x} + 2(\bar{x} - x_{n+1})$.
-    - _Decision:_ Accept the best between $r$ and $e$.
-6. **Contraction ($c$):**
-    - If the Reflection $r$ is typically bad (worse than the second-worst point $x_n$), we overshot or are in a valley. We need to step back.
-    - _Outside Contraction:_ If $f(r) < f(x_{n+1})$, compute average between centroid and reflection.
-    - _Inside Contraction:_ If $f(r) \ge f(x_{n+1})$, compute average between centroid and worst point.
-    - _Decision:_ If the contraction point is better than the point it is based on, accept it.
-7. **Shrink:**
-    - If all else fails (Reflection and Contraction did not improve the worst point), the simplex is likely too large around a minimum.
-    - **Action:** Shrink the entire simplex towards the best point $x_1$. Replace all $x_j$ with $\frac{1}{2}(x_j + x_1)$.
+![[10_Concepts/Nelder-Mead Method#Nelder-Mead Simplex method]]
 
 # Week 5: Constrained Optimization
-## Constraints
-A **constraint** is a logical predicate or condition defined on a set of variables $x \in \mathbb{R}^n$ that restricts the domain of valid values.
-Formally, a system of constraints defines a subset $\mathcal{F} \subseteq \mathbb{R}^n$, known as the **Feasible Set** (or Feasible Region).
-The set $\mathcal{F}$ is defined as:
-$$\mathcal{F} = \{ x \in \mathbb{R}^n \mid c_i(x) = 0, \ \forall i \in \mathcal{E} \quad \text{and} \quad c_j(x) \ge 0, \ \forall j \in \mathcal{I} \}$$
-Where:
-- $c(x)$ are the constraint functions mapping $\mathbb{R}^n \to \mathbb{R}$.
-- $\mathcal{E}$ is the index set for **Equality Constraints**.
-- $\mathcal{I}$ is the index set for **Inequality Constraints**.
-If $\mathcal{F}$ is empty ($\mathcal{F} = \emptyset$), the system is **inconsistent** (or infeasible).
+## Lagrange Multipliers
+![[Lagrange Multipliers#Summary]]
 
-### Equality Constraints
-$$c(x) = 0$$
-- **Definition:** A restriction that forces the variables to satisfy an exact equation.
-- **Geometry:** In $n$-dimensions, a single equality constraint typically reduces the solution space to an $(n-1)$-dimensional surface (a "manifold").
-    - In 2D, this is a curve (line, circle, etc.).
-    - In 3D, this is a surface (plane, sphere, etc.).
-### Inequality Constraint
-$$c(x) \ge 0$$
-- **Definition:** A restriction that bounds the variables to a specific range or side of a boundary.
-- **Geometry:** In $n$-dimensions, a single inequality constraint defines a **region** or **volume** (a "half-space" or interior of a shape).
+## Constraints
+![[10_Concepts/Feasible Set#Constraints]]
 
 ## Constrained Optimization
-### Problem Definition
-We focus on minimizing a function subject to specific restrictions.
-
-We aim to find the [[Optimal Values#Infinum|infinum]] of $f(x)$ subject to the two types of constraints:
-$$\begin{aligned} \min & \quad f(x) \\ \text{subject to} & \quad c_i(x) = 0, \quad \forall i \in \mathcal{E} \quad \text{(Equality constraints)} \\ & \quad c_i(x) \geq 0, \quad \forall i \in \mathcal{I} \quad \text{(Inequality constraints)} \end{aligned}$$
-In constrained optimization, a [[Minimizers#Global Minimizer|global minimizer]] is formally referred to as an **optimal solution**, and a local minimizer is a **locally optimal solution**.
-
-### Necessary Conditions
-To find a minimizer, we analyze the relationship between the gradient of the objective function $\nabla f$ and the gradients of the constraints $\nabla c_i$.
-
-#### Equality Constraints ($c_i(x)=0$)
-If we are at a feasible point $x$, we can only move in directions $s$ that keep us on the constraint curve (tangent directions).
-- **Feasible Direction:** To stay feasible (to first order), the movement $s$ must satisfy $\nabla c_i(x)^T s = 0$.
-- **Descent Direction:** To decrease the function value, the movement $s$ must satisfy $\nabla f(x)^T s < 0$.
-- **Optimality:** If there is no direction $s$ that is both feasible and a descent direction, then $\nabla f(x)$ must be parallel to the constraint gradient $\nabla c_i(x)$. This implies $\nabla f(x) = \lambda \nabla c_i(x)$ for some scalar $\lambda$.
-
-#### Inequality Constraints ($c_i(x) \geq 0$)
-Inequality constraints add complexity because they can be either **active** (limiting the solution) or **inactive**.
-- **Inactive Case ($c_i(x) > 0$):** The constraint is not currently restricting the solution. Locally, the problem behaves as if it were unconstrained. Thus, $\nabla f(x) = 0$ .
-- **Active Case ($c_i(x) = 0$):** The point is on the boundary. We cannot move "out" of the feasible region.
-    - For $x$ to be a minimizer, the gradient $\nabla f$ must point "inward" toward the forbidden region (otherwise, we could move into the feasible region and decrease $f$).
-    - Mathematically, $\nabla f(x) = \lambda_i \nabla c_i(x)$ where **$\lambda_i \geq 0$**.
-#### Complementarity
-To handle both active and inactive cases simultaneously, we introduce the complementarity condition:
-$$\lambda_i c_i(x) = 0$$
-This ensures that either the constraint is active ($c_i(x)=0$) or the multiplier is zero ($\lambda_i=0$) .
-
+![[Mathematical Optimization#Constrained Optimization]]
 ### Lagrangian & The Karush-Kuhn-Tucker (KKT) Conditions
 To formalize the search for optimal points, we combine the objective function and the constraints into a single "helper" function called the **Lagrangian**.
 #### Definition: The Lagrangian Function
-Although not explicitly defined as a standalone formula in the slide text, the theorem implies the construction of a function $\mathcal{L}$ that subtracts the weighted constraints from the objective:
-$$\mathcal{L}(x, \lambda) = f(x) - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i c_i(x)$$
-The variables $\lambda_i$ are called Lagrange multipliers. Finding a minimizer for the constrained problem is related to finding a stationary point of this unconstrained Lagrangian function.
+![[Lagrangian Function#Definition]]
+
 #### The Karush-Kuhn-Tucker (KKT) Conditions
-The KKT conditions act as the necessary "first derivative test" for constrained optimization.
-**Theorem:** If $x^*$ is a local minimizer and a constraint qualification holds, there exist Lagrange multipliers $\lambda_i^*$ such that the following four conditions are met 1:
-1. Stationarity: The gradient of the Lagrangian with respect to $x$ is zero.
-$$\nabla_x \mathcal{L}(x^*, \lambda^*) = \nabla f(x^*) - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i^* \nabla c_i(x^*) = 0$$
-(This is equivalently written in the slides as $\nabla f(x^) = \sum \lambda_i^* \nabla c_i(x^)$).
-2. Primal Feasibility: The point must satisfy the original physical constraints.
-$$c_i(x^*) = 0, \forall i \in \mathcal{E}; \quad c_i(x^*) \geq 0, \forall i \in \mathcal{I}$$
+![[10_Concepts/KKT Conditions#KKT Conditions]]
 
-3. Dual Feasibility: The multipliers for inequality constraints must be non-negative (ensuring the gradient points "inward").
-$$\lambda_i^* \geq 0, \quad \forall i \in \mathcal{I}$$
-4. Complementary Slackness: A constraint is either active ($c_i=0$) or its multiplier is zero ($\lambda_i=0$).
-$$\lambda_i^* c_i(x^*) = 0, \quad \forall i \in \mathcal{I}$$
-#### Constraint Qualification
-The KKT conditions are not automatically true for every minimizer. To rely on KKT, one of the following Constraint Qualifications must hold.
-
-##### Slater's Condition (for convex problems)
-**Problem Definition**
-- Objective $f$ is convex
-- Equality constraints are affine ($a_i^Tx + b_i = 0$).
-- Inequality constraints are concave ($-c_{i}$ is convex).
-**The Condition**
-Slater's condition is satisfied if there exists a point $x^{*}$ such that:
-- The equality constraints are satisfied: $c_{i}(x^{*})=0$ for all $i\in\mathcal{E}$.
-- The inequality constraints are strictly satisfied: $c_{i}(x^{*})>0$ for all $i\in\mathcal{I}$.
-**Implication**
-If Slater's conditions holds for a convex problem, KKT conditions are necessary and sufficient for global optimality. 
-
-##### Linear Independence Constraint Qualification (LICQ)
-This is a more general condition for non-convex problems:
-**Definition** LICQ holds at $x^*$ if the gradients of all **active** constraints $\{\nabla c_i(x^*) : i \in \mathcal{E} \text{ or } (i \in \mathcal{I} \text{ and } c_i(x^*)=0)\}$ are linearly independent .
-**Implication** If LICQ holds at a local minimizer, the KKT conditions must hold.
+### Constraint Qualification
+![[10_Concepts/Constraint Qualifications#Constraint Qualification]]
 
 ### Finding Global Minimizers
 1. Find KKT points: solve the system of KKT equations to find candidate points $(x,\lambda)$
@@ -453,16 +190,19 @@ This is a more general condition for non-convex problems:
 ### Second-Order Conditions
 If the problem is non-convex, KKT points could be maximizers or saddle points. We check the Hessian of the Lagrangian to be sure. 
 
-**The Lagrangian Hessian:**
-$$\nabla^2 \mathcal{L}(x^*, \lambda^*) = \nabla^2 f(x^*) - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i^* \nabla^2 c_i(x^*)$$
-- **Necessary Condition:** For a local minimizer, the Lagrangian Hessian must be Positive Semi-Definite ($w^T \nabla^2 \mathcal{L} w \geq 0$) for all directions $w$ tangent to the active constraints .
-- **Sufficient Condition:** If the Lagrangian Hessian is Positive Definite ($w^T \nabla^2 \mathcal{L} w > 0$) on the tangent subspace of active constraints (and $\lambda_i^* > 0$), then $x^*$ is a **strict local minimizer** .
-
-### Lagrange Multipliers
-The multipliers $\lambda_i^*$ are not just abstract variables; they have a practical economic interpretation.
-- They measure the **sensitivity** of the optimal objective value to changes in the constraints.
-- If we relax a constraint $c_j(x)=0$ to $c_j(x)=\epsilon$, the change in the optimal objective value is approximately:
-$$f(x^*(\epsilon)) - f(x^*) \approx \lambda_j^* \epsilon$$
-- In other words, $\lambda_j^*$ tells you how much the "cost" $f(x)$ decreases if the constraint is loosened.
+![[Lagrangian Function#**Second-Order Condition (Hessian) **]]
 
 # Week 6: Convex Optimization
+Video summary and recap for this week: <iframe width="560" height="315" src="https://www.youtube.com/embed/uh1Dk68cfWs?si=bI_P6_r3o0QDe9So" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+## Practical Approaches for Convex Constrained Optimization
+Three methods to solving problems of the form $\inf \{ f(x):c_{i}(x),\dots \}$ where objective and constraints are [[10_Concepts/Convexity|convex]]. 
+
+![[10_Concepts/Cutting Plane Method In Constrained Optimization#Cutting Plane Method]]
+
+![[10_Concepts/Ellipsoid Method in Constrained Optimization#Ellipsoid Method]]
+
+![[10_Concepts/Interior Point Method in Constrained Optimization#Interior Point Method]]
+
+## Duality Theory
+![[10_Concepts/Duality (optimization)#Duality Theory]]
