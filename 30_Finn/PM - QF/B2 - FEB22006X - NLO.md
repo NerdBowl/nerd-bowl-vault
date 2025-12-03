@@ -1,5 +1,3 @@
-# Non-Linear Optimization
-
 # Course Information
 
 ### Study Goals
@@ -101,3 +99,110 @@ You now have a list of Local Minimizers. To prove one is **Global**, you must ru
     * **Compare:** Evaluate $f(x)$ at all local minimizers. The one with the lowest value is the **Global Minimizer**.
 
 
+# Week 2: Gradient Descent
+## General Line Search Framework
+
+![[10_Concepts/Line Search Methods#Summary]]
+
+## Gradient Descent (Steepest Descent)
+![[10_Concepts/Gradient Descent#Gradient Descent]]
+
+### Momentum Methods
+![[10_Concepts/Momentum Methods#Momentum Methods]]
+### Convergence Analysis
+The efficiency of these methods is analyzed using [[10_Concepts/Taylor's Theorem|Taylor's Theorem]] and the condition number $\kappa = \frac{L}{\mu}$.
+- $\mu$ is the minimum eigenvalue and $L$ is the maximum eigenvalue of the [[Hessian Matrix|Hessian]] $\nabla^2f(x)$. 
+- A large $\kappa$ implies the function is hard to minimize numerically. 
+
+
+### Stochastic Gradient Descent (SGD)
+![[10_Concepts/Gradient Descent#Stochastic Gradient Descent]]
+# Week 3: Advanced Line Search and Convergence
+This week is about methods that utilize the curvature of the function (second-order information) to find better search directions. Additionally, this week includes formalization on finding the optimal step length numerically, and measuring the speed of convergence. 
+
+## Newton's Method
+![[10_Concepts/Newton's Method#Newton's Method]]
+
+## Optimal Step Length
+![[10_Concepts/Optimal Step Lengths in Line Search#Optimal Step Length]]
+## Rates of Convergence
+We can compare optimization algorithms by how fast the error $||x_{k}-x^*||$ approaches zero as $k\rightarrow \infty$. 
+
+**Linear Convergence** The distance to the solution decreases by a constant factor in every iteration.
+- **Definition:** There exists $r \in (0, 1)$ such that for large $k$:
+$$\frac{||x_{k+1} - x^*||}{||x_k - x^*||} \le r$$
+- **Associated Method:** Gradient Descent generally converges linearly. It is reliable but relatively slow (digits of accuracy accumulate at a constant rate).
+
+**Superlinear Convergence** The convergence is faster than linear; the ratio of errors approaches zero. 
+- **Definition:**
+$$\lim_{k \to \infty} \frac{||x_{k+1} - x^*||}{||x_k - x^*||} = 0$$
+- **Associated Method:** Quasi-Newton methods (like BFGS) generally converge superlinearly.
+
+**Quadratic Convergence**  The error is roughly squared at every step. This means the number of correct digits in the solution doubles with every iteration (e.g., $10^{-2} \to 10^{-4} \to 10^{-8}$).
+- **Definition**: There exists $M > 0$ such that for large $k$:
+$$\frac{||x_{k+1} - x^*||}{||x_k - x^*||^2} \le M$$
+- **Associated Method:** Newton's Method generally converges quadratically (provided $x_0$ is close enough to the solution).
+
+# Week 4: Derivative-Free Optimization
+![[Subderivatives#Subgradients]]
+
+![[Fermat's Theorem (Optimization)#Convex Fermat Theorem]]
+
+## Numerical Line Search
+If the problem cannot be solved analytically using subgradients, we return to iterative line search methods
+### Search Direction: Coordinate Descent
+![[10_Concepts/Coordinate Descent Search#Coordinate Descent]]
+
+### Step Length: The Golden Section Method
+![[10_Concepts/The Golden Section Method in Search#The Golden Section Method]]
+
+## Heuristic Line Search
+![[10_Concepts/Nelder-Mead Method#Nelder-Mead Simplex method]]
+
+# Week 5: Constrained Optimization
+## Lagrange Multipliers
+![[Lagrange Multipliers#Summary]]
+
+## Constraints
+![[10_Concepts/Feasible Set#Constraints]]
+
+## Constrained Optimization
+![[Mathematical Optimization#Constrained Optimization]]
+### Lagrangian & The Karush-Kuhn-Tucker (KKT) Conditions
+To formalize the search for optimal points, we combine the objective function and the constraints into a single "helper" function called the **Lagrangian**.
+#### Definition: The Lagrangian Function
+![[Lagrangian Function#Definition]]
+
+#### The Karush-Kuhn-Tucker (KKT) Conditions
+![[10_Concepts/KKT Conditions#KKT Conditions]]
+
+### Constraint Qualification
+![[10_Concepts/Constraint Qualifications#Constraint Qualification]]
+
+### Finding Global Minimizers
+1. Find KKT points: solve the system of KKT equations to find candidate points $(x,\lambda)$
+2. Check slater's condition. If true, then you have found the optimal solution, of not proceed to next step.
+3. Check LICQ. You must also find feasible points where LICQ fails, as these are also candidates. 
+4. Verification (Weierstrass):
+	1. Does Weierstrass' theorem apply? If yes, compare the $f(x)$ values of all KKT points and non-LICQ points. The best one is the global optimum. 
+	2. If it does not apply, use case-specific arguments (limits, geometry) to prove optimality. 
+
+### Second-Order Conditions
+If the problem is non-convex, KKT points could be maximizers or saddle points. We check the Hessian of the Lagrangian to be sure. 
+
+![[Lagrangian Function#**Second-Order Condition (Hessian) **]]
+
+# Week 6: Convex Optimization
+Video summary and recap for this week: <iframe width="560" height="315" src="https://www.youtube.com/embed/uh1Dk68cfWs?si=bI_P6_r3o0QDe9So" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+## Practical Approaches for Convex Constrained Optimization
+Three methods to solving problems of the form $\inf \{ f(x):c_{i}(x),\dots \}$ where objective and constraints are [[10_Concepts/Convexity|convex]]. 
+
+![[10_Concepts/Cutting Plane Method In Constrained Optimization#Cutting Plane Method]]
+
+![[10_Concepts/Ellipsoid Method in Constrained Optimization#Ellipsoid Method]]
+
+![[10_Concepts/Interior Point Method in Constrained Optimization#Interior Point Method]]
+
+## Duality Theory
+![[10_Concepts/Duality (optimization)#Duality Theory]]

@@ -2,9 +2,9 @@
 tags:
 aliases: []
 status: not_started
-created: 1970-01-01 01:00
+created: 2025-11-26 11:28
 ---
-# Untitled
+# Taylor's Theorem
 
 ## Summary
 
