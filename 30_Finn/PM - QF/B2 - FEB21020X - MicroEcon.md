@@ -63,13 +63,21 @@ The course aims to provide students with a foundational understanding of basic m
 ![[10_Concepts/Market Disequilibrium#Market Disequilibrium]]
 ### Theoretical Functions of Price
 ![[10_Concepts/Functions of Price#Functions of Price]]
-
-### Welfare and Efficiency
-![[10_Concepts/Pareto Efficiency#Pareto Efficiency]]
-
 ### Government Intervention
 ![[10_Concepts/Price Controls#Price Controls]]
 
-## Chapter 3:
+## Chapter 3: Game Theory
+![[10_Concepts/Game Theory#Game Theory]]
+
+### Normal Form Games
+![[10_Concepts/Normal Form Games#Normal Form Games]]
+
+![[10_Concepts/Nash Equilibrium#Nash Equilibrium]]
+
+### Extensive Form Games
+![[10_Concepts/Extensive Form Games#Extensive Form Games]]
+
+### Example Games
+![[10_Concepts/Game Theory Games#Game Theory Games]]
 
 ## Chapter 4:
