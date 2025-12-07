@@ -71,12 +71,20 @@ The course aims to provide students with a foundational understanding of basic m
 
 ### Normal Form Games
 ![[10_Concepts/Normal Form Games#Normal Form Games]]
+![[Payoff Matrix#Payoff Matrix]]
+![[10_Concepts/Dominant Strategy#Dominant Strategy]]
 
 ![[10_Concepts/Nash Equilibrium#Nash Equilibrium]]
 
+![[10_Concepts/Maximin Strategy#Maximin Strategy]]
 ### Extensive Form Games
 ![[10_Concepts/Extensive Form Games#Extensive Form Games]]
 
+![[10_Concepts/Game Tree#Game Tree]]
+
+![[10_Concepts/Sub-game Perfect Nash Equilibrium#Sub-game Perfect Nash Equilibrium]]
+
+![[10_Concepts/Commitment Devices#Commitment Devices]]
 ### Example Games
 ![[10_Concepts/Game Theory Games#Game Theory Games]]
 
