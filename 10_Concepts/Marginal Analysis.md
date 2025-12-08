@@ -1,7 +1,8 @@
 ---
 tags:
+  - economics/micro
 aliases: []
-status: not_started
+status: good_enough
 created: 2025-12-04 15:22
 ---
 ### Marginal Analysis
@@ -10,7 +11,7 @@ This framework applies to decisions regarding the *extent* or *level* of an acti
 **Marginal Benefit ($MB$)**: The benefit derived from an additional unit of activity
 **Marginal Cost($MC$)**: The cost incurred by an additional unit of activity.
 
-To find the optimal quantity of an activity $x$, you should increase the level of activity as long as $MB(x)>MC(x)$ and decrease otherwise. The optimum is when $MB(x)=MC(x). 
+To find the optimal quantity of an activity $x$, you should increase the level of activity as long as $MB(x)>MC(x)$ and decrease otherwise. The optimum is when $MB(x)=MC(x)$. 
 
 #### Average-Marginal Distinction
 - **The Trap:** Decision-makers often incorrectly compare _Average Benefit_ and _Average Cost_.

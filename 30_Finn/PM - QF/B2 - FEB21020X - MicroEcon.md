@@ -87,5 +87,40 @@ The course aims to provide students with a foundational understanding of basic m
 ![[10_Concepts/Commitment Devices#Commitment Devices]]
 ### Example Games
 ![[10_Concepts/Game Theory Games#Game Theory Games]]
+- Repeated Games
+- Incomplete Information Games
+- Tit for Tat strat
+- Battle of the sexes
+- Prisoner's dilemma
+- Social Dilemmas
+## Chapter 4: Rational Consumer Choice
 
-## Chapter 4:
+### Rational Choice Theory
+![[10_Concepts/Budget Constraint#Budget Constraint]]
+
+![[10_Concepts/Consumer Preferences#Consumer Preferences]]
+
+![[10_Concepts/Indifference Curves#Indifference Curves]]
+
+![[10_Concepts/Marginal Rate of Substitution#Marginal Rate of Substitution]]
+
+![[10_Concepts/Utility Theory#Utility Theory]]
+
+![[10_Concepts/Marginal Utility#Marginal Utility]]
+
+![[10_Concepts/Corner Solution#Corner Solution]]
+![[10_Concepts/Corner Solution#Corner Solution in Economics]]
+
+![[10_Concepts/Utility Maximization#Utility Maximization]]
+
+## Chapter 5: Individual and Market Demand
+
+
+## Chapter 6: Applications of Rational Choice and Demand Theories
+
+## Chapter 7: Choice Under Uncertainty and The Economics of Information
+
+## Chapter 8: Explaining Tastes: The importance of Altruism and Other Non-Egoistic Behavior
+
+## Chapter 9: Cognitive Limitations and Consumer Behavior
+

@@ -2,15 +2,19 @@
 tags:
   - topic/micro
   - topic/economics
+  - decision-theory
 aliases: []
 status: good_enough
 created: 2025-12-04 15:00
 ---
 ### Rational Choice Theory
-This is the framework to study how people choose under conditions of [[Scarcity]]. It assumes that individuals try to maximize their goals by weighing costs and benefits. 
-#### Home Economicus
-A stereotypical decision-maker in the self-interest model who cares only about personal material costs and benefits. However , the text notes that this is a caricature; the cost-benefit model can also accomdate non-egoistic motives if the person values helping others.
+This is the framework to study how people choose under conditions of [[Scarcity]]. It posits that all individual purchase decisions are the result of a two-step optimization process:
+1. **Defining the Feasible Set:** Identifying the various combinations of goods the consumer is able to buy given their income and market prices.
+2. **Preference Maximization:** Selecting the specific bundle from the feasible set that the consumer prefers to all others.
 
+The model assumes consumers enter the marketplace with well-defined preferences and act to allocate their incomes to best serve these preferences.
+#### Home Economicus
+A stereotypical decision-maker in the self-interest model who cares only about personal material costs and benefits.
 #### As-if thesis
 Economists do not assume people explicitly calculate costs and benefits for every action. Instead they assume people act as if they made such calculations. 
 
