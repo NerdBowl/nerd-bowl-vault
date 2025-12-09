@@ -1,8 +1,7 @@
 ---
 tags:
-  - topic/micro
-  - topic/economics
   - decision-theory
+  - economics/micro
 aliases: []
 status: good_enough
 created: 2025-12-04 15:00
@@ -13,8 +12,9 @@ This is the framework to study how people choose under conditions of [[Scarcity]
 2. **Preference Maximization:** Selecting the specific bundle from the feasible set that the consumer prefers to all others.
 
 The model assumes consumers enter the marketplace with well-defined preferences and act to allocate their incomes to best serve these preferences.
-#### Home Economicus
-A stereotypical decision-maker in the self-interest model who cares only about personal material costs and benefits.
+#### Standards of Rationality
+- **[[Present-Aim Standard]]:** A broad definition where rationality is strictly the efficient pursuit of _whatever_ aims the agent holds at the moment of action, regardless of what those aims are.
+- **[[Self-Interest Standard]] (Homo Economicus):** A narrower definition assuming motives are congruent with material interests, explicitly excluding altruism or moral sentiments.
 #### As-if thesis
 Economists do not assume people explicitly calculate costs and benefits for every action. Instead they assume people act as if they made such calculations. 
 

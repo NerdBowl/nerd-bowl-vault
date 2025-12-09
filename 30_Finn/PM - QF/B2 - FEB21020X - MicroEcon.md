@@ -162,7 +162,105 @@ The course aims to provide students with a foundational understanding of basic m
 ![[10_Concepts/Expected Value#Expected Value]]
 
 ![[Utility Theory#Expected Utility Theory]]
+![[RIsk Attitudes#Risk Attitudes]]
+
+![[10_Concepts/Search Theory#Search Theory]]
+
+![[10_Concepts/Reservation Utility#Reservation Utility]]
+
+![[Search Theory#Search Theory]]
+![[10_Concepts/Search Theory#Search Theory in Economics]]
+
+![[10_Concepts/Insurance Market#Insurance Market]]
+
+![[10_Concepts/Asymmetric Information#Asymmetric Information in Economics]]
+![[10_Concepts/Principal-Agent Problem#Principal-Agent Problem]]
+
+![[10_Concepts/Adverse Selection#Adverse Selection]]
+
+![[10_Concepts/Moral Hazard#Moral Hazard]]
+
+![[10_Concepts/Signalling Theory#Signalling Theory]]
+
+![[10_Concepts/Costly-to-Fake Principle#Costly-to-Fake Principle]]
+
+![[10_Concepts/Full-Disclosure Principle#Full-Disclosure Principle]]
+
+![[10_Concepts/Conspicuous Consumption#Conspicuous Consumption]]
+
 ## Chapter 8: Explaining Tastes: The importance of Altruism and Other Non-Egoistic Behavior
+![[Rational Choice Theory#Standards of Rationality]]
+
+![[10_Concepts/Present-Aim Standard#Present-Aim Standard]]
+![[10_Concepts/Self-Interest Standard#Self-Interest Standard]]
+
+![[Social Preference Utility#Social Preferences]]
+
+![[10_Concepts/Interdependent Utility Function#Interdependent Utility Function]]
+
+![[10_Concepts/Altruism#Altruism in Economics]]
+
+![[10_Concepts/Inequity Aversion#Inequity Aversion]]
+
+![[10_Concepts/Evolutionary Game Theory#Evolutionary Game Theory]]
+![[10_Concepts/Frequency-Dependent Selection#Frequency-Dependent Selection]]
+
+
+![[10_Concepts/Social Dilemma#Social Dilemma]]
 
 ## Chapter 9: Cognitive Limitations and Consumer Behavior
+![[10_Concepts/Bounded Rationality#Bounded Rationality]]
+![[10_Concepts/Satisficing#Satisficing]]
+![[10_Concepts/Dual Process Theory#Dual Process Theory]]
+
+![[10_Concepts/Prospect Theory#Prospect Theory]]
+![[10_Concepts/Mental Accounting#Mental Accounting]]
+
+![[10_Concepts/Mental Heuristics and Biases#Mental Heuristics and Biases]]
+
+### Consumer Choice Anomalies
+![[10_Concepts/Sunk Cost Fallacy#Sunk Cost Fallacy]]
+
+![[10_Concepts/Decoy Effect#Decoy Effect]]
+### Framing Effects
+![[10_Concepts/Framing Effects#Framing Effects]]
+
+![[10_Concepts/Intertemporal Choice#Interttemporal Choice]]
+![[10_Concepts/Hedonic Adaptation#Hedonic Adaptation]]
+
+---
+---
+---
+
+---
+---
+---
+## Chapter 10: Production
+
+
+## Chapter 11: Costs
+
+## Chapter 12: Perfect Competition
+
+## Chapter 13: Monopoly
+
+## Chapter 14: Imperfect Competition
+
+
+---
+---
+---
+## Chapter 15: Labour
+## Chapter 16: Capital
+
+
+---
+---
+---
+## Chapter 17: General Equilibrium and Market Efficiency
+
+## Chapter 18: Externalities, Property Rights, And the COASE Theorem
+
+## Chapter 19: Government
+
 

@@ -21,6 +21,8 @@ Generally, five axioms of preference orderings are assumed to construct solvable
 3. **Monotonicity:** Other quantities staying equal, more of one good is preferred to less. 
 4. **Continuity:** Similar bundles should rank similarly.
 5. **Convexity:**  Mixtures of goods are preferred to extremes. If a consumer is indifferent between bundles A and B, they will prefer a weighted average (bundle C).
+6. **Independence of Irrelevant Alternatives:** An agen'ts preference between two options, $A$ and $B$, should not change based on the introduction or removal of a third option, $C$, provided $C$ is not the preferred option itself.
+7. **Invariance:** Preferences should not depend on the description of the options.
 
 
 

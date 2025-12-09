@@ -1,11 +1,12 @@
 ---
 tags:
+  - game-theory
 aliases: []
-status: not_started
+status: good_enough
 created: 2025-12-08 11:50
 ---
 ### Commitment Devices
-**Commitment Devices** are mechanisms or strategic moves that alter a player's available options or payoffs to make a promise or threat **credible**. They address **Commitment Problems**, where players would collectively benefit from a specific outcome but individual incentives lead to defection.
+**Commitment Devices** are mechanisms or strategic moves that alter a player's available options or payoffs to make a promise or threat **credible**. They address [[Social Dilemma]]s, where players would collectively benefit from a specific outcome but individual incentives lead to defection.
 #### Credible vs. Non-Credible Threats
 - **Non-Credible Threat:** A threat that a rational player would not carry out because it is not in their material interest to do so when the time comes.
 - **Credible Threat:** A threat that the opponent believes will be carried out because the threatener's incentives have been altered (or constrained) to make carrying out the threat optimal or unavoidable.
@@ -16,6 +17,7 @@ Economist Thomas Schelling demonstrated that voluntarily **limiting one's own op
 - **The Solution:** The victim provides evidence of a "blackmailable act" (a commitment device) to the kidnapper. This creates a bond: if the victim goes to the police, the kidnapper releases the blackmail. This aligns the victim's incentives with silence, making the promise credible and allowing for their release .
 #### Psychological Commitment
 In the absence of physical or material commitment devices, **psychological preferences** can serve as commitment devices. If a person is known to feel significant guilt or psychological cost from breaking a promise, their threat/promise becomes credible even if it contradicts material self-interest .
+A person motivated by anger may reject a positive but unfair offer, [[Signalling Theory|signaling]] they cannot be exploited. 
 
 ---
 
