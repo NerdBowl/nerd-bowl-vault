@@ -95,6 +95,8 @@ For every `[[WikiLink]]` listed in the Input Section, generate a comprehensive M
 4.  **Source Context Separation:**
     * Keep the book's narrative separate from the definition.
     * Create a distinct section (e.g., "### Illustrative Examples") to summarize how the author (Frank) explains this. Use the specific scenarios found in the text here, distinct from the general theory.
+      
+Additionally, add some tags to the specific concepts that describe the overarching topic. (e.g. game-theory, demand-theory, economics/micro, etc). Add all that are relevant (consider all fields related (Computer Science, Mathematics, Economics, Physics, etc)). 
 
 **Formatting & Style Rules:**
 * **Atomic & Modular:** Each note should be self-contained.
