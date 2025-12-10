@@ -119,42 +119,24 @@ Check the `Dashboard` file in the root directory to see a live view of concepts 
 ## 📄 Templates
 
 ### Concept Template (`99_System/Templates/New Concept.md`)
-*Note the specific headers used to support the Smart Transclusion workflow.*
+
 
 ```markdown
 ---
 tags:
-  - topic/
+  - TAG
 aliases: []
 status: not_started
 created: <% tp.file.creation_date() %>
 ---
 
-# <% tp.file.title %>
-
-## Summary
+### <% tp.file.title %>
 <% tp.file.cursor() %>
-## Details
 
 ---
 
-## Related
-- 
-
-`dataview
-TABLE file.folder AS "Context"
-FROM [[#]]
-WHERE file.folder != "10_Concepts"
-SORT file.folder ASC
-`
-
-`dataview
-LIST
-FROM #topic/
-WHERE file.tags = this.file.tags
-AND file.name != this.file.name
-LIMIT 10
-`
+### Related
+Here, related notes are automatically shown based on links and tags using DATAVIEW.
 
 ```
 
