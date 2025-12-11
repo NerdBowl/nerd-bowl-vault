@@ -1,4 +1,3 @@
-
 Events
 
 - **Experiment**: Any action whose outcome is subject to uncertainty.
@@ -114,8 +113,8 @@ Joint, Marginal, and Conditional Distributions
 Conditional expectation 
 
 - The **conditional expectation** of a random variable $X$ given that a random variable $Y$ has taken the value $y$, denoted as $E(X \mid Y=y)$, is the expected value of $X$ computed with respect to the conditional probability distribution $f_{X|Y}(x|y)$.
-    - Discrete case: $E(X \mid Y=y) = \sum_{x} x \cdot P(X=x \mid Y=y)$
-    - Continuous case: $E(X \mid Y=y) = \int_{-\infty}^{\infty} x \cdot f_{X|Y}(x|y) \, dx$
+    - Discrete: $E(X \mid Y=y) = \sum_{x} x \cdot P(X=x \mid Y=y)$
+    - Continuous: $E(X \mid Y=y) = \int_{-\infty}^{\infty} x \cdot f_{X|Y}(x|y) \, dx$
 - **Note:** While $E(X \mid Y=y)$ is a a function of $y$, $E(X \mid Y)$ is a random variable that depends on the outcome of $Y$.
 - **Law of Total Expectation** states that the expected value of $X$ is equal to the expected value of the conditional expectation of $X$ given $Y$: $E(X) = E(E(X \mid Y))$.
 	- Discrete: $E(X) = \sum_{y} E(X \mid Y=y) \cdot P(Y=y)$
