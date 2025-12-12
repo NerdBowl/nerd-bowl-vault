@@ -65,18 +65,16 @@
 
 ![[10_Concepts/Period of a State and Ergodicity#Period of a State and Ergodicity]]
 
-![[10_Concepts/Expected Return Time#Expected Return Time]]
-
-![[10_Concepts/Periodic State#Periodic State]]
-
-![[10_Concepts/Ergodic State#Egodic State]]
-
 ![[10_Concepts/Limiting Distribution#Limiting Distribution]]
 
 ![[10_Concepts/Stationary Distribution#Stationary Distribution]]
 
-![[10_Concepts/Gambler's Ruin Problem#Gambler's Ruin Problem]]
 
+![[10_Concepts/Fundamental Matrix (Markov Chains)#Fundamental Matrix (Markov Chains)]]
+
+![[10_Concepts/Mean Time to Absorption#Mean Time to Absorption]]
+
+![[10_Concepts/Absorption Probability#Absorption Probability]]
 
 ## Poisson Processes
 ![[10_Concepts/Counting Process#Counting Process]]

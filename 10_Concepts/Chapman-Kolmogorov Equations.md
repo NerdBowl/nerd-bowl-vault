@@ -9,8 +9,6 @@ status: good_enough
 created: 2025-12-11 17:03
 ---
 ### Chapman-Kolmogorov Equations
-The **Chapman-Kolmogorov equations** provide the fundamental method for computing multi-step transition probabilities in a Markov process. They state that the probability
-
 The **Chapman-Kolmogorov equations** provide the fundamental method for computing multi-step transition probabilities in a Markov process. They state that the probability of transitioning from state $i$ to state $j$ over a duration $n + m$ is the sum of the probabilities of transitioning from $i$ to some intermediate state $k$ in time $n$, and then from $k$ to $j$ in the remaining time $m$, summed over all possible intermediate states $k$.
 
 This identity reflects the **Markov property**: the future depends only on the present state, not on the path taken to reach it. Mathematically, it establishes that the transition probability matrix follows the semigroup property.

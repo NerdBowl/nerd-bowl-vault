@@ -15,10 +15,22 @@ created: 2025-12-11 19:58
 ---
 ### Positive and Null Recurrent States
 This is a sub-classification of a [[Recurrent and Transient States|Recurrent State]], based on the expected time of return.
-If state $i$ is recurrent (probability of return $f_i = 1$), we define $N_i$ as the number of transitions until the process returns to state $i$, and $m_i$ as the expected value of $N_i$:
-$$m_i = E[N_i | X_0 = i]$$
-- **Positive Recurrent:** State $i$ is positive recurrent if $m_i < \infty$.
-- **Null Recurrent:** State $i$ is null recurrent if $m_i = \infty$.
+While a **recurrent** state is one that is visited infinitely often with probability 1, the distinction between **positive** and **null** recurrence describes the _expected time_ between these visits.
+
+Let $T_i$ be the random variable denoting the number of transitions (time) it takes for a Markov chain starting in state $i$ to return to state $i$ for the first time:
+$$T_i = \min \{ n \geq 1 : X_n = i \mid X_0 = i \}$$
+Let $m_i$ denote the **mean return time** (or expected return time) for state $i$:
+$$m_i = E[T_i] = \sum_{n=1}^{\infty} n P(T_i = n)$$
+_Where:_
+- $X_n$: The state of the process at time $n$.
+- $T_i$: The first return time (stopping time).
+- $m_i$: The expected number of steps to return to state $i$.
+
+A state $i$ is defined as:
+1. P**ositive Recurrent** if it is recurrent ($P(T_i < \infty) = 1$) and the mean return time is finite:
+$$m_i < \infty$$
+2. **Null Recurrent** if it is recurrent ($P(T_i < \infty) = 1$) but the mean return time is infinite:
+$$m_i = \infty$$
 
 #### Properties & Intuition
 - **Class Property:** Positive recurrence and null recurrence are class properties.

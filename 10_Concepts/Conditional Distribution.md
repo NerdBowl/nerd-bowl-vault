@@ -9,8 +9,6 @@ status: good_enough
 created: 2025-12-11 13:21
 ---
 ### Conditional Distribution
-Conditional Distributions describe the probability behavior of a random variable X, given that another random variable Y.
-
 **Conditional Distributions** describe the probability behavior of a random variable $X$ given that another random variable $Y$ has taken a specific value $y$. This updates the probability model based on new information.
 
 _Discrete Case (Conditional PMF):_

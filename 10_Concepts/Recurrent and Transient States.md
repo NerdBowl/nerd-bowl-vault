@@ -14,7 +14,7 @@ created: 2025-12-11 19:54
 ### Recurrent and Transient States
 Let $f_i$ denote the probability that, starting in state $i$, the process will ever reenter state $i$.
 - **Recurrent State:** State $i$ is recurrent if $f_i = 1$.
-- **Transient State:** State $i$ is transient if $f_i < 1$17.
+- **Transient State:** State $i$ is transient if $f_i < 1$.
 
 
 Alternative classification using the sum of $n$-step transition probabilities ($P_{ii}^n$):
