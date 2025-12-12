@@ -1,16 +1,3 @@
-Background
-
-|                 | Mass Function (Discrete RV)                                      | Density Function (Continuous RV)                                 |
-| :-------------- | :--------------------------------------------------------------- | :--------------------------------------------------------------- |
-| **Joint**       | $p(x,y) = \mathbb{P}(X=x, Y=y)$                                  | $\mathbb{P}((X,Y) \in A) = \int\int_{A}f(x,y)dxdy$               |
-| **Marginal**    | $p_X(x) = \sum_{y} p(x,y)$                                       | $f_X(x) = \int_{-\infty}^{\infty} f(x,y)dy$                      |
-| **Conditional** | $p_{X\mid Y}(x\mid y) = \frac{p(x,y)}{p_Y(y)}$, for $p_Y(y) > 0$ | $f_{X\mid Y}(x\mid y) = \frac{f(x,y)}{f_Y(y)}$, for $f_Y(y) > 0$ |
-
-|                  | Expectation                                                                                   | Variance                                                                            |
-| :--------------- | :-------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
-| **Conditional**  | $\mathbb{E}(h(X) \mid Y)$: A random variable $u(Y)$, where $u(y) = \mathbb{E}(h(X)\mid Y=y)$. | $\text{Var}(X\mid Y) = \mathbb{E}(X^2\mid Y) - (\mathbb{E}(X\mid Y))^2$             |
-| **Law of Total** | $\mathbb{E}(X) = \mathbb{E}(\mathbb{E}(X\mid Y))$                                             | $\text{Var}(X) = \mathbb{E}(\text{Var}(X\mid Y)) + \text{Var}(\mathbb{E}(X\mid Y))$ |
-
 Stochastic Processes vs Markov Chains
 - A compound random variable $S_N = \sum_{i=1}^{N} X_{i}$ is called a compound variable of iid random variables $X_1, X_2, \ldots, X_{N}$ with mean $\mu$. Then,
 	- $\mathbb{E}(S_N | N) = N\mu, \quad \mathbb{E}(S_N) = E(N) \mu$
@@ -118,8 +105,19 @@ Poisson Process Properties
 - **Decomposing**: Consider a Poisson process $\{N(t), t \ge 0\}$ with rate $\lambda$. Suppose that each event in this process is classified as type I with probability $p$ and type II with probability $(1-p)$ independently of all other events. Let $N_1(t)$ and $N_2(t)$respectively denote the type I and type II events occurring in time $(0, t]$, then:
 	- The counting processes $\{N_1(t), t \ge 0\}$ and $\{N_2(t), t \ge 0\}$ are both Poisson processes with respective rates $\lambda p$ and $\lambda(1-p)$. 
 	- The two processes are independent.
-- If we know one event has occurred by time $t$ (i.e. $N(t)=1$), the time of that single event $T_{1}$ is uniformly distributed over the interval $(0,t)$. For any time $s$ where $s \le t$:$$\mathbb{P}(T_{1}<s|N(t)=1) = \frac{s}{t}$$
+- Conditional Arrival Distribution:
+	- If we know one event has occurred by time $t$ (i.e. $N(t)=1$), the time of that single event $T_{1}$ is uniformly distributed over the interval $(0,t)$. For any time $s$ where $s \le t$:$$\mathbb{P}(T_{1}<s|N(t)=1) = \frac{s}{t}$$
+	- If the random variables $U_{1}, U_{2}, \dots, U_{n}$ are uniformly distributed over $(0, t)$, then the joint density function of the order statistics $U_{(1)} \le U_{(2)} \le \dots \le U(n)$ becomes 
+		- $f(u_{1}, \dots, u_{n}) = \frac{n!}{t^n}, \quad u_{1} \le \dots \le u_{n} \le t$
+	- Given that $N(t)=n$ the $n$ arrival times $S_{1}, \dots, S_{n}$ have the same distribution as the order statistics corresponding to $n$ independent random variables uniformly distributed on the interval $(0,t)$.
+	- For any operation where the order of arguments does not matter, you may ignore the sorting entirely, and treat the arrival times as independent uniform variables.
+- When the arrival rate of a Poisson process is a function of time, we speak of a **nonhomogeneous** or **nonstationary** Poisson process.
+	- If we let $m(t) = \int_{0}^{t} \lambda(y) \, dy$, then $N(s + t) - N(s)$ is a Poisson random variable with mean $m(s + t) - m(s)$.
+
+Continuous-time Markov chains
+- You can think of Continuous-time Markov chains as a Discrete-Time Markov Chain that dictates the path, but instead of taking 1 unit of time per step, the process "pauses" at every node for a random, exponentially distributed amount of time (similar to a Poisson process).
+- Let $\{X(t), t \geq 0\}$ be a continuous-time stochastic process taking values in $\{0, 1, 2, \ldots\}$, and let $\{x(t), t \geq 0\}$ be any deterministic function taking values in $\{0, 1, 2, \ldots\}$. The process $\{X(t), t \geq 0\}$ is called a **continuous-time Markov chain** if $$\begin{align} & P(X(t+s) = j \mid X(s) = i, X(u) = x(u), 0 \leq u < s)=\\&P(X(t+s) = j \mid X(s) = i)\end{align}$$
+- If a continuous-time Markov chain $\{X(t), t \geq 0\}$ satisfies $$P(X(t+s) = j \mid X(s) = i) = P(X(t) = j \mid X(0) = i)$$for every $s, t \geq 0$, then $\{X(t), t \geq 0\}$ is **stationary** (or **time-homogeneous**).
+- Let $T_i$ denote the time the process spends in state $i$ before making a transition into a different state (called sojourn time in state $i$). $T_{i}$ is memoryless, and must therefore have an exponential distribution with rate $v_{i}$.
+- Let $P_{ij}$ denote the probability of transitioning to state $j$, given that the current state is $i$. The transition probabilities $P_{ij}$ satisfy (1) $P_{ii} = 0$, and (2) $\sum_{j}P_{ij}=1$.
 - 
-
-
-
