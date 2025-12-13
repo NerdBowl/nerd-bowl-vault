@@ -4,6 +4,12 @@
 
 ### Assessment
 
+# Question Types
+
+### Q1
+
+### Q2
+
 # Summary
 ## Foundations of Probability & Expectation Domain
 ![[10_Concepts/Random Variables#Random Variables]]
@@ -36,6 +42,14 @@
 
 ![[10_Concepts/Continuous Time Process#Continuous Time Process]]
 
+
+![[10_Concepts/Counting Process#Counting Process]]
+
+![[Independent Increments#Independent Increments]]
+
+![[10_Concepts/Stationary Increments#Stationary Increments]]
+
+
 ![[10_Concepts/Markovian State Construction#Markovian State Construction]]
 
 ## Discrete-Time Markov Chains (DMTC)
@@ -65,7 +79,7 @@
 
 ![[10_Concepts/Period of a State and Ergodicity#Period of a State and Ergodicity]]
 
-![[10_Concepts/Limiting Distribution#Limiting Distribution]]
+![[10_Concepts/Limiting Distribution#Limiting Distribution (DTMC)]]
 
 ![[10_Concepts/Stationary Distribution#Stationary Distribution]]
 
@@ -77,44 +91,79 @@
 ![[10_Concepts/Absorption Probability#Absorption Probability]]
 
 ## Poisson Processes
-![[10_Concepts/Counting Process#Counting Process]]
+
+![[10_Concepts/Homogeneous Poisson Process#Homogeneous Poisson Process]]
 ![[10_Concepts/Interarrival Time#Interarrival Time]]
 ![[10_Concepts/Arrival Time#Arrival Time]]
-### Homogeneous
-![[10_Concepts/Homogeneous Poisson Process#Homogeneous Poisson Process]]
-
 ![[10_Concepts/Conditional Arrival Distribution#Conditional Arrival Distribution]]
 
-### Non-Homogeneous
+![[10_Concepts/Superposition of Poisson Processes#Superposition of Poisson Processes]]
+![[10_Concepts/Thinning of Poisson Process#Thinning of Poisson Process]]
+
 ![[10_Concepts/Non-homogeneous Poisson Process#Non-homogeneous Poisson Process]]
-![[10_Concepts/Intensity Function#Intensity Function]]
-![[10_Concepts/NHPP Interval Distribution#NHPP Interval Distribution]]
 
 ## Continuous-Time Markov Chains (CTMC)
 ![[10_Concepts/Continuous-Time Markov Chain#Continuous-Time Markov Chain]]
 ![[10_Concepts/Sojourn Time#Sojourn Time]]
+
+![[10_Concepts/Embedded Discrete Markov Chain#Embedded Discrete Markov Chain]]
+![[10_Concepts/Q-Matrix#Q-Matrix]]
+
+![[Limiting Distribution#Limiting Distribution (CTMC)]]
+
+![[10_Concepts/Global Balance Equations#Global Balance Equations]]
+
 ### Birth-and-Death Processes (BDP)
-![[10_Concepts/Pure Birth Process#Pure Birth Process]]
 ![[10_Concepts/Birth and Death Process#Birth and Death Process]]
-![[10_Concepts/Chapman-Kolmogorov Equation#Chapman-Kolmogoroc Equation]]
-![[10_Concepts/Kolmogorov Forward Equation#Kolmogorov Forward Equation]]
-![[10_Concepts/Kolmogorov Backward Equation#Kolmogorov Backward Equation]]
-### Time-Dependent Analysis
-### Stationary Analysis
+
+### Queueing Theory
+![[10_Concepts/Kendall's Notation#Kendall's Notation]]
+![[10_Concepts/M-M-1 Queue Definition#M/M/1 Queue Definition]]
+
+![[10_Concepts/Queueing Performance Metrics#Average Number of Clients ($L$)]]
+
+![[10_Concepts/Queueing Performance Metrics#Average Sojourn Time ($W$)]]
+
+![[10_Concepts/Queueing Performance Metrics#Overall Arrival Rate ($ lambda$)]]
+
+![[10_Concepts/Queueing Performance Metrics#Long-Run Proportion of Clients ($a_n$ / $d_n$)]]
+
+![[10_Concepts/Little's Law#Little's Law]]
+
+![[10_Concepts/PASTA Principle#PASTA Principle]]
+
+![[10_Concepts/M-M-k-k Queue#M/M/k/k Queue (Erlang Loss System)]]
+
+![[Cut Equations#Cut Equations]]
 
 
 ## Brownian Motion
-![[10_Concepts/Rademacher Random Variable#Rademacher Random Variable]]
 
-![[10_Concepts/Rescaled Random Walk#Rescaled Random Walk]]
+![[10_Concepts/Random Walk Construction of Brownian Motion#Random Walk Construction of Brownian Motion]]
 
 ![[10_Concepts/Brownian Motion#Brownian Motion]]
+![[10_Concepts/Brownian Motion#Brownian Motion Starting Condition and Marginals]]
+![[Brownian Motion#Brownian Motion Increments]]
+![[10_Concepts/Brownian Motion#Brownian Motion Characterization (Three Properties)]]
+![[10_Concepts/Brownian Motion#Brownian Motion Alternative Characterization]]
 
+![[10_Concepts/Brownian Motion with Drift#Brownian Motion with Drift]]
+![[10_Concepts/Brownian Motion With Drift#Hitting Times and Boundary Crossing]]
 ## Gaussian Processes
 ![[10_Concepts/Gaussian process#Gaussian Process]]
 
-![[10_Concepts/Geometric Brownian Motion#Geometric Brownian Motion]]
-
+![[10_Concepts/Ornstein-Uhlenbeck Process#Ornstein-Uhlenbeck process]]
 
 ## Brownian Bridge
+![[10_Concepts/Reflection Principle#Reflection Principle]]
+
+![[10_Concepts/Hitting Time (Brownian Motion)#Hitting Time (Brownian Motion)]]
+
+![[10_Concepts/Boundary Crossing Probabilities#Boundary Crossing Probabilities]]
+
+![[10_Concepts/Empirical Distribution Function#Empirical Distribution Function]]
+![[10_Concepts/Empirical Process#Empirical Process]]
 ![[10_Concepts/Brownian Bridge#Brownian Bridge]]
+
+![[10_Concepts/Kolmogorov-Smirnov Test#Kolmogorov-Smirnov Test]]
+
