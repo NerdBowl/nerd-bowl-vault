@@ -83,15 +83,25 @@ Continuous-time Markov chains
 	- Since $T_{i}$ is memoryless, it must follow some exponential distribution.
 - Let $P_{ij}$ denote the probability of transitioning to state $j$, given that the current state is $i$. The transition probabilities $P_{ij}$ satisfy (1) $P_{ii} = 0$, and (2) $\sum_{j}P_{ij}=1$.
 
-Transitions
-- 
+Transition Probability Function
+- While $P_{ij}$ (jump probability) defines _where_ the process goes next, the **transition probability function** $P_{ij}(t)$ defines the probability that the process is in state $j$ at time $t$, given it started in state $i$ at time $0$.
+	- $P_{ij}(t) = \mathbb{P}(X(t+s)=j \mid X(s)=i)$ for stationary processes.
+- The **instantaneous transition rate** $q_{ij}$ is the rate at which the process transitions from state $i$ into state $j$. It is related to the sojourn rate $v_i$ and jump probability $P_{ij}$ by $q_{ij} = v_i P_{ij}$. Note that $v_i = \sum_{j \neq i} q_{ij}$.
+	- $q_{ij}$ can also be seen as the derivative of the transition probability at time 0: $q_{ij} = \lim_{h \to 0} \frac{P_{ij}(h)}{h} = P'_{ij}(0)$ for $i \neq j$.
+	- $v_{i} = \lim_{ h \to 0 } \frac{1-P_{ii}(h)}{h}$ 
+- **Chapman-Kolmogorov Equations**: Just like in discrete time, we can decompose a transition over time $t+s$ into a transition to an intermediate state $k$ at time $t$. $$P_{ij}(t+s) = \sum_{k=0}^{\infty} P_{ik}(t) P_{kj}(s)$$
+- Unlike discrete chains where we simply multiply matrices, continuous chains require differential equations to describe how these probabilities evolve over time. 
+- **Kolmogorov Equations**: These equations describe the rate of change of transition probabilities $P_{ij}$.
+	- Backward: For all states $i, j$ and times $t \ge 0$: $$P_{ij}^{\prime}(t) = \sum_{k \neq i} q_{ik} P_{kj}(t) - v_i P_{ij}(t)$$ Example: Birth and Death Process. For a birth and death process, transitions from state $i$ are only possible to $i+1$ (rate $\lambda_i$) or $i-1$ (rate $\mu_i$). The backward equation becomes:$$P_{ij}^{\prime}(t) = \lambda_i P_{i+1, j}(t) + \mu_i P_{i-1, j}(t) - (\lambda_i + \mu_i) P_{ij}(t)$$
+	- Forward: Under suitable regularity conditions (which hold for birth and death processes and finite state models), for all states $i, j$ and times $t \ge 0$: $$P_{ij}^{\prime}(t) = \sum_{k \neq j} q_{kj} P_{ik}(t) - v_j P_{ij}(t)$$Example: Birth and Death Process. Transitions into state $j$ can only come from $j-1$ (via a birth with rate $\lambda_{j-1}$) or $j+1$ (via a death with rate $\mu_{j+1}$). The forward equation becomes:$$P_{ij}^{\prime}(t) = \lambda_{j-1} P_{i, j-1}(t) + \mu_{j+1} P_{i, j+1}(t) - (\lambda_j + \mu_j) P_{ij}(t)$$
+	- Derivation for both equations start with definition of the derivative, applying Chapman-Kolmogorov Equations, and finally definitions of $q_{ij}$ and $v_{i}$.
 
 Birth and Death processes
-- If only transitions from $i$ to $i-1$ (departures/deaths) or $i+1$ (arrivals/births) are allowed, then the process is called a birth and death process. For a state $i$ we say arrivals occur with rate $\lambda_{i}$, and departures occur with rate $\mu_{i}$. 
+- If only transitions from $i$ to $i-1$ (departures/deaths) or $i+1$ (arrivals/births) are allowed, then the process is called a **birth and death process**. For a state $i$ we say arrivals occur with rate $\lambda_{i}$, and departures occur with rate $\mu_{i}$. 
 	- To avoid negative states we may require that $\mu_0 = 0$. 
-	- A pure birth process is a birth and death process where $\mu_i = 0$ for all $i \in \mathbb{Z}$.
-	- A **counting process** is a pure birth process with $X(0)=0$.
-	- A **Poisson process** is a counting process the arrival rate is equal for all states.
+	- A **pure birth process** is a birth and death process where $\mu_i = 0$ for all $i \in \mathbb{N}_{0}$.
+	- A pure birth process with $X(0)=0$, is a counting process.
+	- A **homogeneous Poisson process** is a pure birth process where $X(0)=0$ and the arrival rate is equal for all states.
 - Per the minimum of two exponential distributions:
 	- Given current state $i$, the probability that the next transition corresponds to an arrival is $P_{i,i+1} = \frac{\lambda_{i}}{\lambda_{i}+\mu_{i}}$. Similarly, $P_{i,i-1} = \frac{\mu_{i}}{\lambda_{i}+\mu_{i}}$.
 	- Given current state $i$, the rate at which the process leaves the state is $\lambda_{i} + \mu_{i}$.
@@ -133,3 +143,61 @@ Poisson Process Properties
 	- For any operation where the order of arguments does not matter, you may ignore the sorting entirely, and treat the arrival times as independent uniform variables.
 - When the arrival rate of a Poisson process is a function of time, we speak of a **nonhomogeneous** or **nonstationary** Poisson process.
 	- If we let $m(t) = \int_{0}^{t} \lambda(y) \, dy$, then $N(s + t) - N(s)$ is a Poisson random variable with mean arrival time $m(s + t) - m(s)$.
+
+Limiting probabilities of a continuous-time MC.
+- We define the **limiting probability** of being in state $j$ as $P_{j} = \lim_{ t \to \infty }P_{ij}(t)$. 
+	- These are also called the **stationary probabilities**
+- Suppose this limit exists, and is independent of initial state $i$, then $$\lim_{ t \to \infty }P_{ij}'(t)=\sum_{k\neq j}q_{kj}P_{k}-v_{j}P_{j}$$ 
+- If $\lim_{ t \to \infty }P_{ij}'(t)$ converges, then it must converge to zero, as otherwise $P_{ij}(t)$ wouldn't be a probability. Therefore, to find the limiting probabilities we may solve the balance equations: $v_j P_j = \sum_{k \neq j} q_{kj} P_k$, under the condition $\sum_{j}P_{j}=1$.
+- The limiting probabilities exist if:
+	- all states in the Markov chain communicate,
+	- the Markov chain is positive recurrent.
+- The limiting probability can be interpreted as the long-run proportion of time that the process is in state $j$. 
+- If the limiting probabilities exist, then the chain is called **ergodic**.
+
+Balance Equations for Birth and Death processes
+- For $i=0$, $\lambda_{0}P_{0}=\mu_{1}P_{1}$.
+- For $i>0$, $(\lambda_i + \mu_i) P_i = \mu_{i+1} P_{i+1} + \lambda_{i-1} P_{i-1}$
+- Using a proof by induction we derive that: $\mu_i P_i = \lambda_{i-1} P_{i-1}$, and consequently, $$P_i = \frac{\lambda_0 \lambda_1 \cdots \lambda_{i-1}}{\mu_1 \mu_2 \cdots \mu_i} P_0$$
+- Given that $\sum_{i=0}^{\infty} P_i = 1$, we get: $$P_{0} = \frac{1}{1+\sum_{i=1}^\infty \frac{\lambda_0 \lambda_1 \cdots \lambda_{i-1}}{\mu_1 \mu_2 \cdots \mu_i}}$$
+- If $P_{0} = 0$, than $P_{i}=0$, consequently making the sum of limiting probabilities also zero. Therefore $P_0$ must be unequal to zero. This gives a necessary and sufficient condition for the existence of the limiting probabilities:$$\sum_{n=1}^{\infty} \frac{\lambda_0 \lambda_1 \cdots \lambda_{n-1}}{\mu_1 \mu_2 \cdots \mu_n} < \infty$$
+- If $\lambda_i = \lambda$ for every $i \ge 0$ and $\mu_i = \mu$ for every $i \ge 1$, and $\lambda/\mu < 1$, then $\sum_{n=1}^{\infty}(\lambda/\mu)^n = \frac{\lambda/\mu}{1 - \lambda/\mu} = \frac{\lambda}{\mu - \lambda}$. This simplifies the aforementioned formulae, such that $P_0 = 1 - \lambda/\mu$ and $P_i = (\lambda/\mu)^i (1 - \lambda/\mu)$.
+
+Queueing systems
+- **Kendall's Notation**: Queueing systems are indicated via two letters followed by one or two numbers.
+	- The first letter indicates the arrival process:
+		- $D$ - Deterministic: clients arrive at equidistant time points.
+		- $M$ - Markovian: clients arrive according to a Poisson process.
+		- $G$ - General: clients arrive according to a general arrival process.
+	- The second letter indicates the type of service times:
+		- $D$ - Deterministic: service times are fixed.
+		- $M$ - Markovian: service times $S_{1}, S_{2}, \dots$ are i.i.d exponential variables with common rate.
+		- $G$ - General: service times $S_{1}, S_{2}, \dots$ are independent and i.i.d random variables. They may have any distribution.
+	- The first number indicates the number of servers.
+	- The second number indicates the optional capacity of the system. The capacity is the maximum number of waiting clients plus the number of servers. It is omitted if there is infinite capacity.
+- $M/M/1$, is a system with a single server, no capacity, arrivals following a Poisson process, and service times following some exponential random variable. The number of clients in the system is a birth and death process.
+
+Little's Law
+- **Definitions**: Consider a general queueing system where $N(t)$ is the number of arrivals up to time $t$.
+    - **$\lambda$ (Arrival Rate)**: The overall arrival rate into the system is defined as $\lambda = \lim_{t\rightarrow\infty}\frac{N(t)}{t}$. Note that this is the long-run average rate which may differ from the parameter $\lambda$ in a birth and death process.
+    - **$W$ (Average Sojourn Time)**: Let $V_{n}$ denote the time client $n$ spends in the system (sojourn time). The average sojourn time is $W = \lim_{n\rightarrow\infty}\frac{1}{n}\sum_{j=1}^{n}V_{j}$.
+    - **$L$ (Average Number in System)**: Let $X(t)$ denote the number of clients in the system at time $t$. The average number of clients in the system over time is $L = \lim_{t\rightarrow\infty}\frac{1}{t}\int_{0}^{t}X(s)ds$.
+- The law: if both $\lambda$ and $W$ exist and are finite, then $L$ also exists and $L = \lambda W$.
+    - **Intuition**: Consider the total time all customers spent in the system up to a large time $T$. This can be calculated as the sum of time per customer ($W \times \lambda T$) or the integral of customers over time ($T \times L$). Equating these yields the law.
+    - **Versatility**: Little's law is one of the most general laws in queueing theory; it applies to _any_ queueing system and is not limited to continuous-time Markov chains.
+- Application to $M/M/1$:
+	- The time average number in the system is calculated as $L = \sum_{n=0}^{\infty}nP_{n} = \frac{\lambda}{\mu-\lambda}$ provided $\lambda/\mu < 1$.
+	- We apply Little's law to find the average time a client spends in the system $W = \frac{L}{\lambda} = \frac{1}{\mu-\lambda}$.
+- Little's Law can be applied to specific parts of the system by carefully defining the systems boundaries:
+	- Let $\lambda_Q$ be the arrival rate into the queue ($\lambda_Q = \lambda$).
+	- Let $W_Q$ be the average waiting time in the queue. This is the total sojourn time minus the average service time: $W_{Q} = W - \frac{1}{\mu} = \frac{\lambda}{\mu(\mu-\lambda)}$.
+	- Let $L_Q$ be the average number of clients in the queue. By Little's Law: $L_{Q} = \lambda W_Q = \frac{\lambda^{2}}{\mu(\mu-\lambda)}$.
+
+Limiting properties of a queueing system: PASTA
+- Definitions of limiting probabilities.
+	- **$P_n$ (Time Average)**: The long-run probability that the system contains exactly $n$ clients at time $t$: $P_{n}=\lim_{t\rightarrow\infty}\mathbb{P}(X(t)=n)$. This is equivalent to the long-run proportion of time the system spends in state $n$.
+	- **$a_n$ (Arrival Average)**: The long-run proportion of arriving clients that find $n$ clients in the system upon arrival.
+	- **$d_n$ (Departure Average)**: The long-run proportion of departing clients that leave $n$ clients in the system upon departure.
+- In any system where clients arrive and depart one at a time, these two probabilities coincide: $a_n = d_n$. However, $P_{n}$ and $a_n$ are not always equal, except if arrivals follow a Poisson distribution.
+- **P**oisson **A**rrivals **S**ee **T**ime **A**verages implies $P_n = a_n$.
+
