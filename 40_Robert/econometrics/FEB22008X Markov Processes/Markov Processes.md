@@ -219,7 +219,7 @@
 	- For $t_1 \leq t_2$, $W(t_1)$ and $W(t_2)$ have mean zero and covariance $t_1$.
 - Reflection principle: The probability that the maximum of the random walk reaches or exceeds $k$ is exactly twice the probability that the random walk ends above $k$ at time $n$:$$\mathbb{P}(\max_{j=1,\dots,n} S_j \geq k) = 2\mathbb{P}(S_n \ge k)$$
 AI Generated from here onwards:
-### **Gaussian Processes**
+### Gaussian Processes
 * **Definition**: A stochastic process $\{X(t), t \in T\}$ is a Gaussian process if every finite-dimensional distribution of $\{X(t), t \in T\}$ is multivariate normal.
 * **Characterization**: A Gaussian process is completely described by:
     * Its mean function: $\mathbb{E}(X(t))$.
@@ -232,7 +232,7 @@ AI Generated from here onwards:
     * **Brownian Bridge**: A Gaussian process with mean zero and covariance function $\min(t_1, t_2) - t_1 t_2$.
     * **Ornstein-Uhlenbeck Process**: A Gaussian process with mean zero and covariance function $\exp\{-\alpha|t_1 - t_2|/2\}$. It is stationary, unlike Brownian Motion.
     * **Geometric Brownian Motion**: Defined as $X(t) = e^{\mu t + \sigma W(t)}$. Note: This is **not** a Gaussian process; for fixed $t$, it follows a log-normal distribution.
-### **Brownian Bridge**
+### Brownian Bridge
 * **Definition**: A Brownian bridge $\{B(t), 0 \le t \le 1\}$ is a continuous Gaussian process on the interval $[0, 1]$ with $B(0) = B(1) = 0$.
     * Mean function: 0.
     * Covariance function: $\text{cov}(B(t_1), B(t_2)) = \min(t_1, t_2) - t_1 t_2$.
@@ -247,7 +247,7 @@ AI Generated from here onwards:
     * One-sided boundary crossing: $\mathbb{P}(\sup_{0 \le u \le 1} B(u) > y) = \exp\{-2y^2\}$ for $y > 0$.
     * Two-sided (absolute) crossing: $\mathbb{P}(\sup_{0 \le u \le 1} |B(u)| > y) = 2 \sum_{j=1}^{\infty} (-1)^{j+1} \exp\{-2j^2 y^2\}$.
     * These probabilities are derived by relating the Brownian bridge to a Brownian motion crossing a linear boundary: $\sup_{0 \le u \le 1} B(u) \overset{d}{=} \sup_{t \ge 0} \frac{W(t)}{1+t}$.
-### **Empirical Processes & Asymptotic Statistics**
+### Empirical Processes & Asymptotic Statistics
 * **Empirical Distribution Function (EDF)**:
     * $F_n(x) = \frac{1}{n} \sum_{i=1}^n I_{\{X_i \le x\}}$. It estimates the true CDF $F(x)$.
     * Asymptotically, $\sqrt{n}(F_n(x) - F(x))$ converges to a normal distribution $N(0, F(x)(1-F(x)))$ at a fixed $x$.
@@ -258,7 +258,7 @@ AI Generated from here onwards:
     * We can estimate parameters $\theta$ that are functionals of the CDF (i.e., $\theta = g(F)$) using the estimator $\hat{\theta} = g(F_n)$.
     * If $\theta$ depends on the CDF at finite points (e.g., median), the asymptotic distribution involves a multivariate normal derived from the Brownian bridge covariance.
     * If $\theta$ depends on the integral of the CDF (e.g., mean), the limit involves an integral of the Brownian bridge: $\sqrt{n}(\hat{\theta} - \theta) \to \int g'(x) B(F(x)) dx$.
-### **Kolmogorov-Smirnov (KS) Test**
+### Kolmogorov-Smirnov (KS) Test
 * **Goal**: Test if a sample $Y_1, ..., Y_n$ comes from a specific distribution $F_0(y)$.
 * **Statistic**: $K_n = \sqrt{n} \sup_{y \in \mathbb{R}} |F_n(y) - F_0(y)|$.
 * **Asymptotic Distribution**:
@@ -266,7 +266,7 @@ AI Generated from here onwards:
     * This limit is independent of the distribution $F_0$ (distribution-free).
     * Critical values are based on the distribution of $\sup |B(u)|$ (e.g., for $\alpha=0.05$, critical value $\approx 1.36$).
 * **Confidence Bands**: We can construct bands $F_n(y) \pm k_{\alpha}/\sqrt{n}$. If $F_0(y)$ falls outside these bands, the null hypothesis is rejected.
-### **Boundary Crossing Probabilities**
+### Boundary Crossing Probabilities
 * **Problem**: Find the probability that a process crosses a boundary $\psi(t)$ within a time interval.
 * **Brownian Motion (Constant Boundary)**:
     * Using the reflection principle: $\mathbb{P}(\sup_{0 \le t \le b} W(t) > y) = 2\mathbb{P}(W(b) > y) = 2(1 - \Phi(y/\sqrt{b}))$.
@@ -279,7 +279,7 @@ AI Generated from here onwards:
     * Crossing a constant boundary $y$ for $X(t) = W(t) + \mu t$ (where $\mu < 0$) is equivalent to a standard BM crossing a linear boundary. $\mathbb{P}(\sup_{t \ge 0} X(t) > y) = \exp(2\mu y)$.
 * **Comparing Hitting Times**:
     * Probability that $W(t)$ hits $a > 0$ before it hits $b < 0$: $\mathbb{P}(T_a < T_b) = \frac{-b}{a-b}$. This is derived from the gambler's ruin problem for random walks.
-### **Butler Test for Symmetry**
+### Butler Test for Symmetry
 * **Goal**: Test if a distribution is symmetric around zero.
 * **Statistic**: Based on ordered absolute values $|Y_{(1)}| \le ... \le |Y_{(n)}|$ and their signs $R_i$.
     * $T_n = \sup_{0 \le t \le 1} |\frac{1}{\sqrt{n}} \sum_{i=1}^{[nt]} R_i|$.

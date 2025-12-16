@@ -95,3 +95,5 @@ Matrix-Matrix product, and Composite Transformations
 	- If $AB = 0$, then in general it is **not true** that $A = 0$ or $B = 0$.
 - If $A$ is an $n \times n$ matrix and if $k$ is a positive integer, then $A^k = AA...A$ ($k$ factors). For $k = 0$ we define $A^0 = I$.
 
+
+- TODO: Add this: $$\mathbf{u} \cdot \mathbf{v} = \|\mathbf{u}\| \|\mathbf{v}\| \cos(\theta)$$
