@@ -54,20 +54,23 @@ Relations
 
 Functions
 - A function $f$ from set $A$ to set $B$ (denoted $f: A \to B$) is a relation where every input has exactly one output.
-	- **Total:** For every $a \in A$, there is some $b \in B$ such that $(a, b) \in f$. 
-		- (Every input has at least one output).
-	- **Well-defined:** If $(a, b) \in f$ and $(a, c) \in f$, then $b = c$. 
-		- (Every input has at most one output).
-	- **Domain:** The set $A$.
-		- (All possible inputs).
-	- **Codomain:** The set $B$.
-		- (All allowed outputs)
-	- **Range (or Image):** $\{f(a) \mid a \in A\}$.
-		- (Set of actual outputs produced).
-- **Injective (One-to-One):** Every output corresponds to at most one input. $$\forall x, y \in A, f(x) = f(y) \implies x = y$$
-- **Surjective (Onto):** Every output corresponds to at least one input. $$\forall b \in B, \exists a \in A \text{ such that } f(a) = b$$
-- **Bijective (One-to-One Correspondence):** Both Injective and Surjective.
-	- An inverse function $f^{-1}$ exists if and only if $f$ is bijective.
+	- **Domain:** The set $A$ of all possible inputs.
+	- **Codomain:** The set $B$ of all allowed outputs.
+	- **Range (or Image):** The set $\{f(a) \mid a \in A\}$ of all actual possible outputs.
+- For a relation to be a function, it must be total and well-defined.
+	- **Total:** Every input has at least one output.
+		- For every $a \in A$, there is some $b \in B$ such that $(a, b) \in f$. 
+	- **Well-defined:** Every input has at most one output.
+		- If $(a, b) \in f$ and $(a, c) \in f$, then $b = c$. 
+- A function may be classified based on its outputs.
+	- **Injective (One-to-One):** Every output corresponds to at most one input. 
+		- $\forall x, y \in A, f(x) = f(y) \implies x = y$
+	- **Surjective (Onto):** Every output corresponds to at least one input. 
+		- $\forall b \in B, \exists a \in A \text{ such that } f(a) = b$
+	- **Bijective (One-to-One Correspondence):** Both Injective and Surjective.
+		- An inverse function $f^{-1}$ exists if and only if $f$ is bijective.
+
+
 
 TODO: maybe write about number sets (natural, integer, rational, real, complex)
 
