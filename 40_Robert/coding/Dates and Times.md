@@ -82,19 +82,18 @@ Since a day is $86,400.002$ atomic seconds, a simple multiple of $24 \times 60 \
 
 On January 1, 1958, scientists synchronized two clocks, each counting seconds. 
 - TAI (International Atomic Time): The weighted average of over 400 clocks counting atomic seconds worldwide. 
-- UT1 (Universal Time): The time determined by the earth's rotation. Where one full rotation is 24 hours and consequently $86,400$ seconds.
+- UT1 (Universal Time): The time determined by the earth's rotation. Where one full rotation is 24 hours and correspondingly $86,400$ seconds.
 
 These clocks diverge due to the slowing rotation of the Earth. 
 
-**UTC (Coordinated Universal Time)** serves as the compromise. It ticks at the precise speed of Atomic Time (TAI) but is actively managed to remain within 0.9 seconds of Earth’s rotation (UT1). To maintain this alignment, the **IERS** (International Earth Rotation and Reference Systems Service) monitors the drift. Whenever the difference approaches the 0.9 second threshold, they order a **Leap Second**. Then at, midnight on either June 30 or December 31, the clock ticks: 
-$$
-23:59:59 \rightarrow 23:59:60 \rightarrow 00:00:00
-$$
-UTC is the standard used for civil time. 
+**UTC (Coordinated Universal Time)** serves as the compromise. It ticks at the precise speed of Atomic Time (TAI) but is actively managed to remain within 0.9 seconds of Earth’s rotation (UT1). To maintain this alignment, the **IERS** (International Earth Rotation and Reference Systems Service) monitors the drift. Whenever the difference approaches the 0.9 second threshold, they order a **Leap Second** allowing UT1 to catch up with UTC. 
 
-> Leap years follow a fixed schedule, but these leap seconds do not. Requiring us to listen for updates from IERS. 
+>![[Pasted image 20251230173629.png]] 
+>The difference UT1-TAI (blue) and UTC-TAI (red) from 1958 to the present. The time steps in UTC are the leap second adjustments. The positive leap second is an extra second that is inserted into the UTC time scale, which slows its advance relative to UT1. The yellow line shows the evolution of UT1-TAI that would result from a rate of −1.0 s y⁻¹, which was typical for the 13 years following 1972.
+>
+>Reference: Levine, Judah. (2024). [A proposal to change the leap-second adjustments to coordinated universal time. Metrologia. 61. 10.1088/1681-7575/ad6266](https://www.researchgate.net/publication/382230156_A_proposal_to_change_the_leap-second_adjustments_to_coordinated_universal_time). 
 
-Global meteorologists voted in 2022 to stop adding leap seconds by 2035, deciding that the software bugs are worse than the time drift. Instead the intention is to let the offset grow for a century, and doing a larger correction (like a leap minute) in the distant future.
+Leap years follow a fixed schedule, but these leap seconds do not. Requiring us to listen for updates from IERS. Global meteorologists voted in 2022 to stop adding leap seconds by 2035, deciding that the software bugs are worse than the time drift. Instead the intention is to let the offset grow for a century, and doing a larger correction (like a leap minute) in the distant future.
 
 #### Timezones
 
@@ -105,6 +104,8 @@ Because the Earth is a rotating sphere, **Solar Noon** (when the sun is highest)
 - Key Distinction: 
 	- An Offset is a *fixed duration* (e.g., `-05:00`). 
 	- A Timezone (e.g., `Europe/Amsterdam`) is a *history of rules* that tells you which offset applies at a specific moment.
+
+> The IANA (Internet Assigned Numbers Authority) timezone database is the global standard for translating between human civil time and absolute time.
 
 #### ISO8601
 With all these variables (Years, Months, Days, Hours, Minutes, Seconds, and Offset), just writing a date and time is ambiguous. Does `01/02/03` mean Jan 2nd, 2003 (US), Feb 1st, 2003 (Europe), or Feb 3rd, 2001 (Japan)? To solve this, we use the **ISO 8601** standard. It is the only format you should ever use when systems talk to one another.
@@ -121,8 +122,4 @@ Example: `2023-12-25T14:30:00Z` represents December 25th, 2023, at 2:30 PM UTC.
 
 Timekeeping is fundamentally messy because we are attempting to force the fractional, and fluctuating motion of celestial bodies into the rigid, integer-based logic of our calendars and clocks. 
 
-To navigate this complexity effectively, you should adopt the following mental model. **Separate the instant from the label** an event happens at one specific, absolute, moment in the universe (Physics). A date and time are merely a "label" for that moment based on human rules and locations (Politics). ISO8601 is the standard for unambiguous labels. 
-
-
-
-
+To navigate this complexity effectively, you should adopt the following mental model. **Separate the instant from the label**. An event happens at one specific, absolute, moment in the universe (Physics). A date and time are merely a "label" for that moment based on human rules and locations (Politics). ISO8601 is the standard for unambiguous labels.
