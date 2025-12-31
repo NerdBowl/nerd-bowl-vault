@@ -8,6 +8,8 @@ The most intuitive measure of time is the position of the Sun in the Sky. **Appa
 
 A **Sidereal Day** is the time it takes for Earth to rotate exactly $360^\circ$ about its axis. This is measured relative to distant stars. Since the Earth is also rotating around the sun, the Earth must rotate slightly **more than** $360^\circ$ before the sun is directly overhead again. The time it takes before the Sun to appear in the same position is called the **Solar Day**.
 
+> This is also explained nicely in this video: https://youtu.be/FUHkTs-Ipfg?t=692
+
 However, because the Earth orbits the sun in an ellipse (moving faster when closer to the Sun) and because Earth's axis is tilted, the length of an **(Apparent) Solar Day** varies throughout the year by up to half a minute.
 
 I an attempt to solve the irregularity of apparent solar time scientists created a hypothetical **Mean Sun** that moves moves along the equator at a constant rate that matches the real Sun's average rate over the year. The **Mean Solar Time** is then the time based on the position of the Mean Sun.  
