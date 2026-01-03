@@ -114,7 +114,7 @@ To solve this, we use the **ISO 8601** standard. It is the only format you shoul
 - Largest units first (Year $\rightarrow$ Second). This ensures that alphabetical sorting is also chronological sorting.
 - Always use 2 digits for months/days (e.g., 05, not 5) to maintain string length.
 - Hyphens separators for dates (-), Colons for time (:), and a T to separate the two.
-- The Timezone: If the time is in UTC, append a **`Z`** (Zulu time). If not, append the offset (e.g., `+05:30` or `-08:00`).
+- If the time is in UTC, append a **`Z`** (Zulu time). If not, append the offset (e.g., `+05:30` or `-08:00`).
 
 Example: `2023-12-25T14:30:00Z` represents December 25th, 2023, at 2:30 PM UTC. 
 
